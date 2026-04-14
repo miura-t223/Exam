@@ -99,12 +99,12 @@ public class StudentDao extends Dao {
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 	    ResultSet rSet = null;
-	    String condition = "and ent_year=? and class_num=?";
-	    String order = "order by no asc";
+	    String condition = " and ent_year=? and class_num=? ";
+	    String order = " order by no asc ";
 	    
 	    String conditionIsAttend = "";
 	    if (isAttend ) {
-	    	conditionIsAttend = "and is_attend=true";
+	    	conditionIsAttend = " and is_attend=true ";
 	    }
 	    try {
 	    	statement = connection.prepareStatement(baseSql + condition + conditionIsAttend + order);
@@ -141,12 +141,12 @@ public class StudentDao extends Dao {
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 	    ResultSet rSet = null;
-	    String condition = "and ent_year=?";
-	    String order = "order by no asc";
+	    String condition = " and ent_year=? ";
+	    String order = " order by no asc ";
 	    
 	    String conditionIsAttend = "";
 	    if (isAttend ) {
-	    	conditionIsAttend = "and is_attend=true";
+	    	conditionIsAttend = " and is_attend=true ";
 	    }
 	    
 	    try {
@@ -182,11 +182,11 @@ public class StudentDao extends Dao {
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 	    ResultSet rSet = null;
-	    String order = "order by no asc";
+	    String order = " order by no asc ";
 	    
 	    String conditionIsAttend = "";
 	    if (isAttend ) {
-	    	conditionIsAttend = "and is_attend=true";
+	    	conditionIsAttend = " and is_attend=true ";
 	    }
 	    
 	    try {
