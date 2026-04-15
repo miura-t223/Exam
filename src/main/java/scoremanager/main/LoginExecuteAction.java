@@ -15,16 +15,16 @@ public class LoginExecuteAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        // --- リクエストパラメータ取得 ---
+        // --- 1. リクエストパラメータ取得 ---
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
-        // ---  DB で認証チェック ---
+        // --- 2. DB で認証チェック ---
         TeacherDao dao = new TeacherDao();
         Teacher teacher = dao.login(id, password);
 
         if (teacher != null) {
-            // --- 認証成功: セッションに教員情報を保存 ---
+            // --- 3. 認証成功: セッションに教員情報を保存 ---
             HttpSession session = request.getSession();
             session.setAttribute("user", teacher);
 
@@ -32,7 +32,7 @@ public class LoginExecuteAction extends Action {
             response.sendRedirect(request.getContextPath() + "/scoremanager/main/menu.jsp");
 
         } else {
-            // --- 認証失敗: エラーメッセージと一緒に login.jsp に戻す ---
+            // --- 4. 認証失敗: エラーメッセージを添えて login.jsp に戻す ---
             Map<String, String> errors = new HashMap<>();
             errors.put("login", "IDまたはパスワードが間違っています");
 
