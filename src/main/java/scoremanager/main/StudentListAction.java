@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import bean.School;
 import bean.Student;
 import bean.Teacher;
 import dao.ClassNumDao;
@@ -28,10 +27,8 @@ public class StudentListAction extends Action {
 		// ログイン未実装中の仮対応
 		// 今のSQLでは tes 側に school / class_num / teacher がそろっている
 		if (teacher == null || teacher.getSchool() == null) {
-			School s = new School();
-			s.setCd("tes");
-			teacher = new Teacher();
-			teacher.setSchool(s);
+			response.sendRedirect(request.getContextPath() + "/scoremanager/main/Login.action");
+			return;
 		}
 
 		// リクエストパラメータ取得
