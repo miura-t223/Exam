@@ -10,4 +10,7 @@
   if (t != null) { t.printStackTrace(new java.io.PrintWriter(out)); }
 %>
 </pre>
+<div class="my-2 px-4">
+    	<a href="menu.jsp">メニューに戻る</a>
+	</div>
 </body></html>

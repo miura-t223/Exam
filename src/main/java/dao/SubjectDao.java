@@ -29,7 +29,7 @@ public class SubjectDao {
 
         Connection con = ds.getConnection();
 
-        String sql = baseSql + " WHERE code=? AND school_cd=?";
+        String sql = baseSql + " WHERE cd=? AND school_cd=?";
         PreparedStatement st = con.prepareStatement(sql);
 
         st.setString(1, code);
@@ -42,7 +42,7 @@ public class SubjectDao {
         if (rs.next()) {
             subject = new Subject();
 
-            subject.setCode(rs.getString("code"));
+            subject.setCode(rs.getString("cd"));
             subject.setName(rs.getString("name"));
             subject.setSchool(school);
         }
@@ -62,7 +62,7 @@ public class SubjectDao {
 
             Subject subject = new Subject();
 
-            subject.setCode(rs.getString("code"));
+            subject.setCode(rs.getString("cd"));
             subject.setName(rs.getString("name"));
             subject.setSchool(school);
 
@@ -99,12 +99,12 @@ public class SubjectDao {
 
         Connection con = ds.getConnection();
 
-        String sql = "INSERT INTO subject(code, name, school_cd) VALUES(?,?,?)";
+        String sql = "INSERT INTO subject(school_cd, cd, name) VALUES(?,?,?)";
         PreparedStatement st = con.prepareStatement(sql);
 
-        st.setString(1, subject.getCode());
-        st.setString(2, subject.getName());
-        st.setString(3, subject.getSchool().getCd());
+        st.setString(1, subject.getSchool().getCd());
+        st.setString(2, subject.getCode());
+        st.setString(3, subject.getName());
 
         int line = st.executeUpdate();
 
@@ -119,7 +119,7 @@ public class SubjectDao {
 
         Connection con = ds.getConnection();
 
-        String sql = "UPDATE subject SET name=? WHERE code=? AND school_cd=?";
+        String sql = "UPDATE subject SET name=? WHERE cd=? AND school_cd=?";
         PreparedStatement st = con.prepareStatement(sql);
 
         st.setString(1, subject.getName());
@@ -139,7 +139,7 @@ public class SubjectDao {
 
         Connection con = ds.getConnection();
 
-        String sql = "DELETE FROM subject WHERE code=? AND school_cd=?";
+        String sql = "DELETE FROM subject WHERE cd=? AND school_cd=?";
         PreparedStatement st = con.prepareStatement(sql);
 
         st.setString(1, code);
