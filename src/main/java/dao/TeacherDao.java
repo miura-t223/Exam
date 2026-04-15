@@ -36,7 +36,7 @@ public class TeacherDao extends Dao {
                 teacher.setPassword(rSet.getString("password"));
                 teacher.setName(rSet.getString("name"));
 
-                // 学校情報もセット
+                // 学校情報セット
                 School school = new School();
                 school.setCd(rSet.getString("school_cd"));
                 teacher.setSchool(school);
