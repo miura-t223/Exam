@@ -23,7 +23,7 @@ public class TestDao {
 
     public TestDao() throws Exception {
         InitialContext ic = new InitialContext();
-        ds = (DataSource) ic.lookup("java:/comp/env/jdbc/book2");
+        ds = (DataSource) ic.lookup("java:/comp/env/jdbc/miurasystem");
     }
 
     // ■ get（1件取得）
