@@ -24,6 +24,8 @@ public class LoginExecuteAction extends Action {
         Teacher teacher = dao.login(id, password);
 
         if (teacher != null) {
+        	
+        	teacher.setAuthenticated(true);
             // --- 3. 認証成功: セッションに教員情報を保存 ---
             HttpSession session = request.getSession();
             session.setAttribute("user", teacher);
