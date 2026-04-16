@@ -4,19 +4,13 @@ import java.io.Serializable;
 
 public class ClassNum implements Serializable {
 
-	/**
-	 * クラス名:class_num
-	 */
+	/*クラス名:class_num*/
 	private String class_num;
 	
-	/**
-	 * 学校:School
-	 */
+	/* 学校:School */
 	private School school;
 	
-	/**
-	 * ゲッター・セッター
-	 */
+	/* ゲッター・セッター */
 	
 	public School getSchool() {
 		return school;
