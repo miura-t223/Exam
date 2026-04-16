@@ -38,7 +38,7 @@
                     </div>
                 </c:if>
 
-                <form method="post" action="LoginExecute.action">
+                <form method="post" action="<c:url value='/scoremanager/main/LoginExecute.action'/>">
 
                     <%-- ログインID --%>
                     <div class="form-floating mb-3">
