@@ -27,9 +27,9 @@
                     <strong>ログアウトしました</strong><br>
                 </div>
 
-                <%-- ログイン画面に戻るリンク --%>
+                <%-- ★ログイン画面に戻るリンク（直JSPではなく Login.action に戻す） --%>
                 <div class="d-grid mt-4">
-                    <a href="${pageContext.request.contextPath}/scoremanager/login.jsp"
+                    <a href="${pageContext.request.contextPath}/scoremanager/main/Login.action"
                        class="btn btn-primary btn-lg">
                         ログイン画面へ戻る
                     </a>

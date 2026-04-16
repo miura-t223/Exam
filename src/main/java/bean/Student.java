@@ -4,39 +4,25 @@ import java.io.Serializable;
 
 public class Student implements Serializable {
 	
-	/**
-	 * 学生番号：String
-	 */
+	/* 学生番号：String */
 	private String no;
 	
-	/**
-	 * 学生名：String
-	 */
+	/* 学生名：String */
 	private String name;
 	
-	/**
-	 * 入学年度：int
-	 */
+	/* 入学年度：int */
 	private int entYear;
 	
-	/**
-	 * クラス番号：String
-	 */
+	/* クラス番号：String */
 	private String classNum;
 	
-	/**
-	 * 在学フラグ：boolean
-	 */
+	/* 在学フラグ：boolean */
 	private boolean isAttend;
 	
-	/**
-	 * 学校：school
-	 */
+	/* 学校：school */
 	private School school;
 	
-	/**
-	 * ゲッタ・セッタ
-	 */
+	/* ゲッタ・セッタ */
 	public String getNo() {
 		return no;
 	}

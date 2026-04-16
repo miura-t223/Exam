@@ -19,20 +19,22 @@ public class LoginExecuteAction extends Action {
         String id = request.getParameter("id");
         String password = request.getParameter("password");
 
-        // ---  DB で認証チェック ---
+        // --- 認証チェック ---
         TeacherDao dao = new TeacherDao();
         Teacher teacher = dao.login(id, password);
 
         if (teacher != null) {
+        	
+        	teacher.setAuthenticated(true);
             // --- 認証成功: セッションに教員情報を保存 ---
             HttpSession session = request.getSession();
             session.setAttribute("user", teacher);
 
-            // ★ 修正: ルート相対パスにして scoremanager の2重化を防ぐ
+            // ルート相対パスにして scoremanager の2重化を防ぐ
             response.sendRedirect(request.getContextPath() + "/scoremanager/main/menu.jsp");
 
         } else {
-            // --- 認証失敗: エラーメッセージと一緒に login.jsp に戻す ---
+            // ---認証失敗: エラーメッセージを添えて login.jsp に戻す ---
             Map<String, String> errors = new HashMap<>();
             errors.put("login", "IDまたはパスワードが間違っています");
 
