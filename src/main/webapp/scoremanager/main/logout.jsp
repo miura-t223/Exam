@@ -16,7 +16,7 @@
             <h1 class="h3 fw-bold">得点管理システム</h1>
         </div>
 
-        <%-- ログアウト完了メッセージ --%>
+        <!-- ログアウト機能 -->
         <div class="card shadow-sm">
             <div class="card-header bg-white text-center py-3">
                 <h2 class="h4 mb-0 fw-bold">ログアウト</h2>
@@ -24,10 +24,11 @@
             <div class="card-body p-4 text-center">
 
                 <div class="alert alert-success">
+                	<%-- ログアウト完了メッセージ --%>
                     <strong>ログアウトしました</strong><br>
                 </div>
 
-                <%-- ★ログイン画面に戻るリンク（直JSPではなく Login.action に戻す） --%>
+                <%-- ログイン画面に戻るリンク（直JSPではなく Login.action に戻す） --%>
                 <div class="d-grid mt-4">
                     <a href="${pageContext.request.contextPath}/scoremanager/main/Login.action"
                        class="btn btn-primary btn-lg">
