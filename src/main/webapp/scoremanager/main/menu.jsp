@@ -13,6 +13,7 @@
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">メニュー</h2>
 			<div class="row text-center px-4 fs-3 my-5">
 				<!-- 背景も併せて項目を作る -->
+				<!-- 学生管理のページに飛ぶリンク -->
 				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
 					style="height: 10rem; background-color: #dbb;">
 					<a href="StudentList.action">学生管理</a>
@@ -21,21 +22,26 @@
 				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
 					style="height: 10rem; background-color: #bdb;">
 					<div>
+						<!-- 成績管理機能 -->
 						<div class="">成績管理</div>
+						<!-- 成績登録のページに飛ぶリンク -->
 						<div class="">
 							<a href="TestRegist.action">成績登録</a>
 						</div>
+						<!-- 成績参照のページに飛ぶリンク -->
 						<div class="">
 							<a href="TestList.action">成績参照</a>
 						</div>
 					</div>
 				</div>
 				<!-- 背景も併せて項目を作る -->
+				<!-- 科目管理のページに飛ぶリンク -->
 				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
 					style="height: 10rem; background-color: #bbd;">
 					<a href="SubjectList.action">科目管理</a>
 				</div>
 				<!-- 背景も併せて項目を作る -->
+				<!-- クラス管理のページに飛ぶリンク -->
 				<div class="col d-flex align-items-center justify-content-center mx-2 rounded shadow"
 					style="height: 10rem; background-color: #ddb;">
 					<a href="ClassList.action">クラス管理</a>

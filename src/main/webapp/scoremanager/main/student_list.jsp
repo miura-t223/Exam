@@ -37,9 +37,11 @@
                     </select>
                 </div>
                 <div class="col-2 form-check text-center">
+                	<!-- 在学中科判断する -->
                     <label class="form-check-label" for="student-f3-check">在学中</label>
                     <input class="form-check-input" type="checkbox"
                            id="student-f3-check" name="f3" value="process"
+                           
                            <c:if test="${!empty f3}"> checked</c:if>>
                 </div>
                 <div class="col-2 text-center">
@@ -77,12 +79,14 @@
 		                            </c:otherwise>
 		                        </c:choose>
 		                    </td>
+		                    <!-- 変更のページに飛ぶリンク -->
 		                    <td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
 		                </tr>
 		            </c:forEach>
 		        </table>
 		    </c:when>
   			<c:otherwise>
+  			<!-- 検索して当てはまる学生がいなかった場合 -->
 		        <div>学生情報が存在しませんでした。</div>
 		    </c:otherwise>
 		</c:choose>
