@@ -8,7 +8,7 @@
 
 	<c:param name="content">
 		<section class="me-4">
-			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生変更</h2>
+			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生情報変更</h2>
 
 			<c:if test="${not empty errors.common}">
 				<div class="alert alert-danger mx-3">${errors.common}</div>
@@ -17,28 +17,34 @@
 			<form action="StudentUpdateExecute.action" method="post">
 				<div class="mx-3">
 
-					<%-- 変更画面では学生番号は変更させないため readonly にして送る --%>
-					<div class="mb-3">
-						<label class="form-label" for="no">学生番号</label>
-						<input class="form-control" type="text" id="no" name="no" value="${student.no}" readonly>
-					</div>
-
 					<%-- 入学年度も変更させない想定で readonly にする --%>
 					<div class="mb-3">
-						<label class="form-label" for="ent-year">入学年度</label>
-						<input class="form-control" type="text" id="ent-year" name="ent_year" value="${student.entYear}" readonly>
+						<label class="form-label" >入学年度</label>
+						<div class="form-control-plaintext">${student.entYear}</div>
+						<input type="hidden" name="ent_year" value="${student.entYear}">
+					</div>
+
+					<%-- 変更画面では学生番号は変更させないため readonly にして送る --%>
+					<div class="mb-3">
+						<label class="form-label">学生番号</label>
+						<div class="form-control-plaintext">${student.no}</div>
+						<input type="hidden" name="no" value="${student.no}">
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label" for="name">氏名</label>
-						<input class="form-control" type="text" id="name" name="name" value="${student.name}">
+						<input class="form-control" type="text" id="name" name="name" 
+							value="${student.name}"
+							placeholder="氏名を入力してください"
+							maxlength="10"
+							required>
 						<div class="text-warning">${errors.name}</div>
 					</div>
 
 					<div class="mb-3">
 						<label class="form-label" for="class-num">クラス</label>
-						<select class="form-select" id="class-num" name="class_num">
-							<option value="0">----</option>
+						<select class="form-select" id="class-num" name="class_num" required>
+							<option value="">----</option>
 							<c:forEach var="num" items="${class_num_set}">
 								<option value="${num}" <c:if test="${num == student.classNum}">selected</c:if>>
 									${num}
@@ -54,9 +60,8 @@
 						<label class="form-check-label" for="is-attend">在学中</label>
 					</div>
 
-					<div class="mt-4">
-						<input class="btn btn-primary" type="submit" value="変更して終了">
-						<a class="btn btn-secondary" href="StudentList.action">戻る</a>
+					<div class="mt-3">
+						<input class="btn btn-primary" type="submit" value="変更">
 					</div>
 
 				</div>
