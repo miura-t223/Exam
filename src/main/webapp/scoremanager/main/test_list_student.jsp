@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
  
 <c:import url="/common/base.jsp">
-<%-- 成績参照フォーム --%>
+<%-- 成績参照表示フォーム --%>
  
  
 <c:param name="scripts"></c:param>
@@ -17,7 +17,7 @@
 -->
 
         <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目別成績一覧</h2>
-        <form method="get" action="TestListSubjectExecute.action">
+        <form method="get" action="TestList.action">
             <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
                 <div class="col-3">
                     <label class="form-label" for="student-f1-select">入学年度</label>
@@ -66,7 +66,7 @@
         
         
         <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生別成績一覧</h2>
-        <form method="get" action="TestListStudentExecute.action">
+        <form method="get" action="TestList.action">
             <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
                 <!-- 学生番号で検索(テキストボックス) -->
                 <div class="col-4">
@@ -84,6 +84,37 @@
         </form>
 
 
+		<c:choose>
+		    <c:when test="${tests.size() > 0}">
+		        <div>検索結果 ${tests.size()} 件</div>
+		        <table class="table table-hover">
+		            <tr>
+		                <th>入学年度</th>
+		                <th>学生番号</th>
+		                <th>氏名</th>
+		                <th>クラス</th>
+		                <th class="text-center">在学中</th>
+		                <th></th>
+		            </tr>
+		            <c:forEach var="t" items="${tests}">
+					    <tr>
+					        <td>${t.student.entYear}</td>
+					        <td>${t.student.no}</td>
+					        <td>${t.student.name}</td>
+					        <td>${t.student.classNum}</td>
+					        <td>${t.subject.name}</td>
+					        <td>${t.no}</td>
+					        <td>${t.point}</td>
+					        <!-- 成績変更 -->
+					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
+		                </tr>
+		            </c:forEach>
+		        </table>
+		    </c:when>
+  			<c:otherwise>
+		        <div>学生情報が存在しませんでした。</div>
+		    </c:otherwise>
+		</c:choose>
 	</section>
        <div class="my-2 px-4">
     	<a href="menu.jsp">メニューに戻る</a>

@@ -9,10 +9,8 @@ import java.util.Map;
 import bean.School;
 import bean.Subject;
 import bean.Teacher;
-import bean.Test;
 import dao.ClassNumDao;
 import dao.SubjectDao;
-import dao.TestDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -46,8 +44,6 @@ public class TestListAction extends Action {
 		List<String> classList = cNumDao.filter(school);
 		//エラーメッセージを入れるための箱
 		Map<String, String> errors = new HashMap<>();
-		TestDao tDao = new TestDao();
-		List<Test> tests = new ArrayList<>();
 		
 		
 		
@@ -112,7 +108,7 @@ public class TestListAction extends Action {
 		
 		
 		
-        // ★ 初回アクセスならここで forward
+        // 初回アクセス時用フォワード
         if (isFirstAccess) {
             request.setAttribute("tests", new ArrayList<>());
             request.setAttribute("ent_year_set", entYearSet);
@@ -124,24 +120,6 @@ public class TestListAction extends Action {
         }
 		
 		
-		// 条件に応じて検索
-		if (studentNo != null && !studentNo.isBlank()) {
-		    tests = tDao.filter(teacher.getSchool(), studentNo);
-		} else if (entYear != 0 && !classNum.equals("0") && subjectCd != null && !subjectCd.isBlank()) {
-		    // 年度、クラス、科目を全て指定→実行
-		    tests = tDao.filter(teacher.getSchool(), entYear, classNum, subjectCd);
-		//未入力があった場合 → エラー
-		}else {
-			// 学生別検索がエラーの場合
-	    	if (studentNo == null || studentNo.isBlank()) {
-	    	    errors.put("f4", "このフィールドを入力してください");
-		    // 科目別検索がエラー野場合
-		    } else {
-		        errors.put("f1", "入学年度とクラスと科目を指定してください");
-		    }
-		 // 空のリストを返す or 全件表示(どちらでもOK)
-		    tests = new ArrayList<>();
-		}
 		
 		
 		
@@ -151,15 +129,10 @@ public class TestListAction extends Action {
 		request.setAttribute("f2", classNum);
 		request.setAttribute("f3", subjectCd);
 		request.setAttribute("f4", studentNo);
-
-		request.setAttribute("tests", tests);
-
 		request.setAttribute("ent_year_set", entYearSet);
 		request.setAttribute("class_num_set", classList);
 		request.setAttribute("class_subject_set", subjectList);
-
-		request.setAttribute("errors", errors);
-
+		// フォワード先を設定
 		request.getRequestDispatcher("test_list.jsp").forward(request, response);
 	}
 }
