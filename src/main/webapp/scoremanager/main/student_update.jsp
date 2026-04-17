@@ -21,7 +21,7 @@
 					<div class="mb-3">
 						<label class="form-label" >入学年度</label>
 						<div class="form-control-plaintext">${student.entYear}</div>
-						<input type="hidden" name="ent-year" value="${student.entYear}">
+						<input type="hidden" name="ent_year" value="${student.entYear}">
 					</div>
 
 					<%-- 変更画面では学生番号は変更させないため readonly にして送る --%>
