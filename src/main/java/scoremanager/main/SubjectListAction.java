@@ -62,7 +62,7 @@ public class SubjectListAction extends Action {
  
         request.setAttribute("subjects", subjects);
  
-        request.getRequestDispatcher("subject_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/scoremanager/main/subject_list.jsp").forward(request, response);
 
     }
 

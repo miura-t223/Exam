@@ -5,7 +5,6 @@ import java.util.Map;
 
 import bean.Subject;
 import bean.Teacher;
-import dao.SubjectDao;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -82,10 +81,6 @@ public class SubjectUpdateExecuteAction extends Action {
         subject.setSchool(teacher.getSchool());
  
   
- 
-        SubjectDao sDao = new SubjectDao();
- 
-        sDao.save(subject); // 登録と同じメソッド!(存在すれば更新される)
  
   
  
