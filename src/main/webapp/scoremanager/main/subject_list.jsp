@@ -1,8 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
- 
-<c:import url="/scoremanager/common/base.jsp">
+
+<c:import url="/common/base.jsp">
     <c:param name="title">科目管理</c:param>
     <c:param name="content">
         <section class="container mt-4">
@@ -29,15 +29,15 @@
                         <tbody>
                             <c:forEach var="sub" items="${subjects}">
                                 <tr>
-                                    <td>${sub.cd}</td><%-- ⑥ 科目コード --%>
+                                    <td>${sub.code}</td><%-- ⑥ 科目コード --%>
                                     <td>${sub.name}</td><%-- ⑦ 科目名 --%>
                                     <td>
                                         <%-- ⑧ 変更リンク --%>
-                                        <a href="SubjectUpdate.action?cd=${sub.cd}">変更</a>
+                                        <a href="SubjectUpdate.action?cd=${sub.code}">変更</a>
                                     </td>
                                     <td>
                                         <%-- ⑨ 削除リンク --%>
-                                        <a href="SubjectDelete.action?cd=${sub.cd}">削除</a>
+                                        <a href="SubjectDelete.action?cd=${sub.code}">削除</a>
                                     </td>
                                 </tr>
                             </c:forEach>

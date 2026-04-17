@@ -23,7 +23,7 @@
 			 <div class="mb-3">
 			    <label for="cd" class="col-sm-3 col-form-label">科目コード</label><br>
 			
-			    <input type="text" class="form-control" name="cd" value="${subject.cd}" readonly>
+			    <input type="text" class="form-control" name="cd" value="${subject.code}" readonly>
 			</div>
  
  
