@@ -45,9 +45,9 @@
                     <label class="form-label" for="student-f3-select">科目</label>
                     <select class="form-select" id="student-f3-select" name="f3">
                         <option value="">----</option>
-                        <c:forEach var="subject" items="${subjectList}">
+                        <c:forEach var="subject" items="${class_subject_set}">
                             <%-- 現在のnumと選択されていた値が一致していればselectedを追記 --%>
-                            <option value="${subject}" <c:if test="${subject==f3}"> selected</c:if>>${subject}</option>
+                            <option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>>${subject.name}	</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -85,8 +85,8 @@
 
 
 		<c:choose>
-		    <c:when test="${students.size()>0}">
-		        <div>検索結果 ${students.size()} 件</div>
+		    <c:when test="${tests.size() > 0}">
+		        <div>検索結果 ${tests.size()} 件</div>
 		        <table class="table table-hover">
 		            <tr>
 		                <th>入学年度</th>
@@ -96,24 +96,17 @@
 		                <th class="text-center">在学中</th>
 		                <th></th>
 		            </tr>
-		            <c:forEach var="student" items="${students}">
-		                <tr>
-		                    <td>${student.entYear}</td>
-		                    <td>${student.no}</td>
-		                    <td>${student.name}</td>
-		                    <td>${student.classNum}</td>
-		                    <td class="text-center">
-		                        <%-- 在学フラグが立っている場合「〇」それ以外は「×」を表示 --%>
-		                        <c:choose>
-		                            <c:when test="${student.isAttend}">
-		                                〇
-		                            </c:when>
-		                            <c:otherwise>
-		                                ×
-		                            </c:otherwise>
-		                        </c:choose>
-		                    </td>
-		                    <td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
+		            <c:forEach var="t" items="${tests}">
+					    <tr>
+					        <td>${t.student.entYear}</td>
+					        <td>${t.student.no}</td>
+					        <td>${t.student.name}</td>
+					        <td>${t.student.classNum}</td>
+					        <td>${t.subject.name}</td>
+					        <td>${t.no}</td>
+					        <td>${t.point}</td>
+					        <!-- 成績変更 -->
+					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
 		                </tr>
 		            </c:forEach>
 		        </table>

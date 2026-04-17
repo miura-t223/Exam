@@ -40,6 +40,17 @@ public class TestListAction extends Action {
 		
 		
 		
+		School school = teacher.getSchool();
+		//クラス情報を取得するための DAO インスタンス
+		ClassNumDao cNumDao = new ClassNumDao();
+		List<String> classList = cNumDao.filter(school);
+		//エラーメッセージを入れるための箱
+		Map<String, String> errors = new HashMap<>();
+		TestDao tDao = new TestDao();
+		List<Test> tests = new ArrayList<>();
+		
+		
+		
 		// リクエストパラメータ
 		// 入学年度
 		String entYearStr = request.getParameter("f1");
@@ -49,6 +60,16 @@ public class TestListAction extends Action {
 		String subjectCd = request.getParameter("f3");
 		// 学生番号
 		String studentNo = request.getParameter("f4");
+		
+		
+		
+		
+		// ★ 初回アクセス判定（ここでは forward しない）
+		boolean isFirstAccess =
+		    entYearStr == null &&
+		    classNum == null &&
+		    subjectCd == null &&
+		    studentNo == null;
 		
 		
 		
@@ -67,28 +88,11 @@ public class TestListAction extends Action {
 		if (subjectCd == null || subjectCd.isBlank()) {
 		    subjectCd = "";
 		}
-		// 学生番号が未入力orスペースの時は空白に揃える
-		if (studentNo == null || studentNo.isBlank()) {
+		// 学生番号が未入力の時は空白に揃える
+		if (studentNo == null) {
 		    studentNo = "";
 		}
-
 		
-		
-		
-		
-		School school = teacher.getSchool();
-		
-		
-		
-		
-		//クラス情報を取得するための DAO インスタンス
-		ClassNumDao cNumDao = new ClassNumDao();
-
-		//クラス
-		List<String> classList = cNumDao.filter(school);
-		
-		//エラーメッセージを入れるための箱
-		Map<String, String> errors = new HashMap<>();
 		
 		
 		
@@ -97,9 +101,10 @@ public class TestListAction extends Action {
 		int year = todaysDate.getYear();
 		List<Integer> entYearSet = new ArrayList<>();
 		for (int i = year - 10; i <= year + 1; i++) {
-			entYearSet.add(i);
+		    entYearSet.add(i);
 		}
-		//科目検索用プルダウン
+
+		// 科目検索用プルダウン
 		SubjectDao subDao = new SubjectDao();
 		List<Subject> subjectList = subDao.filter(teacher.getSchool());
 		
@@ -107,8 +112,18 @@ public class TestListAction extends Action {
 		
 		
 		
-		TestDao tDao = new TestDao();
-		List<Test> tests = new ArrayList<>();
+        // ★ 初回アクセスならここで forward
+        if (isFirstAccess) {
+            request.setAttribute("tests", new ArrayList<>());
+            request.setAttribute("ent_year_set", entYearSet);
+            request.setAttribute("class_num_set", classList);
+            request.setAttribute("class_subject_set", subjectList);
+            request.setAttribute("errors", errors);
+            request.getRequestDispatcher("test_list.jsp").forward(request, response);
+            return;
+        }
+		
+		
 		// 条件に応じて検索
 		if (studentNo != null && !studentNo.isBlank()) {
 		    tests = tDao.filter(teacher.getSchool(), studentNo);
@@ -146,5 +161,5 @@ public class TestListAction extends Action {
 		request.setAttribute("errors", errors);
 
 		request.getRequestDispatcher("test_list.jsp").forward(request, response);
-		}
+	}
 }
