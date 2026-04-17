@@ -84,7 +84,7 @@ public class ClassNumDao extends Dao {
 	        statement.setString(1, school.getCd());
 	        // プリペアードステートメントを実行
 	        ResultSet rSet = statement.executeQuery();
- 
+	        
 	        // リザルトセットを全件走査
 	        while (rSet.next()) {
 	            // リストにクラス番号を追加
