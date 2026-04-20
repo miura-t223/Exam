@@ -25,6 +25,12 @@ public class StudentUpdateExecuteAction extends Action {
 		HttpSession session = request.getSession();
 		Teacher teacher = (Teacher) session.getAttribute("user");
 
+		// 未ログインならログイン画面へ
+		if (teacher == null || teacher.getSchool() == null) {
+			response.sendRedirect(request.getContextPath() + "/scoremanager/main/Login.action");
+			return;
+		}
+
 		// 画面から送られてきた値を取得
 		String no = request.getParameter("no");
 		String entYearStr = request.getParameter("ent_year");
@@ -34,20 +40,23 @@ public class StudentUpdateExecuteAction extends Action {
 
 		Map<String, String> errors = new HashMap<>();
 
-		// 入学年度はreadonly想定だが、受け取った値をintに変換して使う
-		int entYear = Integer.parseInt(entYearStr);
+		// 入学年度（hiddenで来る想定）
+		int entYear = 0;
+		if (entYearStr != null && !entYearStr.isBlank()) {
+			entYear = Integer.parseInt(entYearStr);
+		}
 
 		// 在学中チェックが入っていればtrue
 		boolean isAttend = (isAttendStr != null);
 
-		// -------- 入力チェック --------
+		// -------- 入力チェック（ブラウザrequiredがあるので保険） --------
 		if (name == null || name.isBlank()) {
 			errors.put("name", "氏名を入力してください");
 		} else if (name.length() > 10) {
 			errors.put("name", "氏名は10文字以内で入力してください");
 		}
 
-		if (classNum == null || classNum.isBlank() || classNum.equals("0")) {
+		if (classNum == null || classNum.isBlank()) {
 			errors.put("class_num", "クラスを選択してください");
 		}
 
@@ -86,8 +95,8 @@ public class StudentUpdateExecuteAction extends Action {
 		boolean result = sDao.save(student);
 
 		if (result) {
-			// 更新成功 → 一覧画面へ戻す
-			response.sendRedirect("StudentList.action");
+			// 変更成功 → 変更完了画面へ
+			response.sendRedirect("StudentUpdateDone.action");
 		} else {
 			errors.put("common", "更新に失敗しました");
 

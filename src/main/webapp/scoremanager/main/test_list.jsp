@@ -45,7 +45,7 @@
                     <label class="form-label" for="student-f3-select">科目</label>
                     <select class="form-select" id="student-f3-select" name="f3">
                         <option value="">----</option>
-                        <c:forEach var="subject" items="${class_subject_set}">
+                        <c:forEach var="subject" items="${subjectList}">
                             <%-- 現在のnumと選択されていた値が一致していればselectedを追記 --%>
                             <option value="${subject}" <c:if test="${subject==f3}"> selected</c:if>>${subject}</option>
                         </c:forEach>
@@ -71,7 +71,7 @@
                 <!-- 学生番号で検索(テキストボックス) -->
                 <div class="col-4">
 	                <label class="form-label" for="student-no">学生番号</label>
-	                <input class="form-control" type="text" id="student-no" name="f2" value="${f2}">
+	                <input class="form-control" type="text" id="student-no" name="f4" value="${f4}">
                 </div>
                 
                 
@@ -79,12 +79,11 @@
                 <div class="col-2 text-center">
                     <button class="btn btn-secondary" id="filter-button">検索</button>
                 </div>
-                <div class="mt-2 text-warning">${errors.get("f1")}</div>
+                <div class="mt-2 text-warning">${errors.get("f4")}</div>
             </div>
         </form>
-        
-        
-        
+
+
 		<c:choose>
 		    <c:when test="${students.size()>0}">
 		        <div>検索結果 ${students.size()} 件</div>
