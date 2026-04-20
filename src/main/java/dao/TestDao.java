@@ -30,13 +30,13 @@ public class TestDao extends Dao {
             // 学生
             Student student = new Student();
             student.setClassNum(rs.getString("class_num"));
-            student.setNo(rs.getString("student_id"));
+            student.setNo(rs.getString("student_no"));
             student.setSchool(school);
             
             // 科目
             Subject subject = new Subject();
             subject.setSchool(school);
-            subject.setCode(rs.getString("subject_code"));
+            subject.setCode(rs.getString("subject_cd"));
             
             test.setStudent(student);
             test.setSubject(subject);
@@ -112,19 +112,51 @@ public class TestDao extends Dao {
 	    PreparedStatement statement = null;
 	    ResultSet rs = null;
 	
-	    String condition = " and student_id=? ";
-	    String order = " order by no ";
-	
+	    String sql =
+	    	    "SELECT " +
+	    	    " t.no AS test_no, t.point, t.class_num, " +
+	    	    " s.no AS student_no, " +
+	    	    " sub.cd AS subject_cd, sub.name AS subject_name " +
+	    	    "FROM test t " +
+	    	    "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
+	    	    "JOIN subject sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
+	    	    "WHERE t.school_cd = ? AND t.student_no = ? " +
+	    	    "ORDER BY t.no";
+	    
+	    
+	    
+	    
 	    try {
-	        String sql = baseSql + condition + order;
-	
 	        statement = connection.prepareStatement(sql);
 	        statement.setString(1, school.getCd());
 	        statement.setString(2, studentNo);
-	
+
 	        rs = statement.executeQuery();
-	        list = postFilter(rs, school);
-	
+
+	        while (rs.next()) {
+	            Test test = new Test();
+
+	            // student
+	            Student student = new Student();
+	            student.setNo(rs.getString("student_no"));
+	            student.setClassNum(rs.getString("class_num"));
+	            student.setSchool(school);
+
+	            // subject
+	            Subject subject = new Subject();
+	            subject.setCode(rs.getString("subject_cd"));
+	            subject.setName(rs.getString("subject_name"));
+	            subject.setSchool(school);
+
+	            test.setStudent(student);
+	            test.setSubject(subject);
+	            test.setNo(rs.getInt("test_no"));
+	            test.setPoint(rs.getInt("point"));
+
+	            list.add(test);
+	        }
+	        
+	        
 	    } finally {
 	        if (rs != null) rs.close();
 	        if (statement != null) statement.close();
