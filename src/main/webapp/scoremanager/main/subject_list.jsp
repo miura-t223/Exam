@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 
 <c:import url="/common/base.jsp">
-
 	<c:param name="title">得点管理システム</c:param>
 	<c:param name="scripts"></c:param>
 
@@ -15,34 +14,23 @@
 				<a href="SubjectCreate.action">新規登録</a>
 			</div>
 
-			<c:choose>
-				<c:when test="${not empty subjects}">
-					<div class="mx-3">検索結果 ${subjects.size()} 件</div>
+			<table class="table table-hover mx-3">
+				<tr>
+					<th>科目コード</th>
+					<th>科目名</th>
+					<th></th>
+					<th></th>
+				</tr>
 
-					<table class="table table-hover mx-3">
-						<tr>
-							<th>科目コード</th>
-							<th>科目名</th>
-							<th></th>
-						</tr>
-
-						<c:forEach var="subject" items="${subjects}">
-							<tr>
-								<td>${subject.code}</td>
-								<td>${subject.name}</td>
-								<td>
-									<a href="SubjectUpdate.action?code=${subject.code}">変更</a>
-								</td>
-							</tr>
-						</c:forEach>
-					</table>
-				</c:when>
-
-				<c:otherwise>
-					<div class="mx-3">科目情報が存在しませんでした。</div>
-				</c:otherwise>
-			</c:choose>
+				<c:forEach var="subject" items="${subjects}">
+					<tr>
+						<td>${subject.code}</td>
+						<td>${subject.name}</td>
+						<td><a href="SubjectUpdate.action?cd=${subject.code}">変更</a></td>
+						<td><a href="SubjectDelete.action?cd=${subject.code}">削除</a></td>
+					</tr>
+				</c:forEach>
+			</table>
 		</section>
 	</c:param>
-
 </c:import>

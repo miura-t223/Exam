@@ -33,7 +33,7 @@
  
             <div class="mb-3">
  
-                <label for="name" class="col-sm-3 col-form-label">科目コード</label><br>
+                <label for="name" class="col-sm-3 col-form-label">科目名</label><br>
  
 				<input type="text" class="form-control"  name="name"
                                value="${subject.name}" maxlength="30" placeholder="科目名を入力してください"required>
