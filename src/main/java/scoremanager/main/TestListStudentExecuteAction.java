@@ -32,6 +32,7 @@ public class TestListStudentExecuteAction extends Action {
         	//エラー時のメッセージ内容
             errors.put("f4", "このフィールドを入力してください");
             request.setAttribute("errors", errors);
+            request.setAttribute("f4", studentNo);
             request.setAttribute("tests", new ArrayList<>());
             request.getRequestDispatcher("test_list_student.jsp").forward(request, response);
             return;
@@ -48,6 +49,8 @@ public class TestListStudentExecuteAction extends Action {
         
         // JSPに値を渡す
         request.setAttribute("tests", tests);
+        request.setAttribute("f4", studentNo);
+        
         // フォワード先を設定
         request.getRequestDispatcher("test_list_student.jsp").forward(request, response);
     }
