@@ -52,14 +52,14 @@ public class TestListSubjectExecuteAction extends Action {
         
         
         // 検索フィールドが未入力or空白の場合
+        
         if (entYear == null || entYear.equals("0")
-        	    || classNum == null || classNum.isBlank()
-        	    || subjectCd == null || subjectCd.isBlank()) {
-        	
-        	    errors.put("f1", "入学年度・クラス・科目をすべて選択してください");
-        	    
-        	    
-        	    
+        	    || classNum == null || classNum.equals("0") || classNum.isBlank()
+        	    || subjectCd == null || subjectCd.equals("0") || subjectCd.isBlank()) {
+
+        
+        	    errors.put("f1", "　　入学年度・クラス・科目をすべて選択してください");
+
         	    request.setAttribute("ent_year_set", entYearSet);
         	    request.setAttribute("class_num_set", classList);
         	    request.setAttribute("class_subject_set", subjectList);
@@ -72,6 +72,7 @@ public class TestListSubjectExecuteAction extends Action {
         	    request.getRequestDispatcher("test_list.jsp").forward(request, response);
         	    return;
         	}
+
         
         
         

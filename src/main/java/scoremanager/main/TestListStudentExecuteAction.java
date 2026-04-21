@@ -30,7 +30,7 @@ public class TestListStudentExecuteAction extends Action {
         // 検索フィールドが未入力or空白の場合
         if (studentNo == null || studentNo.isBlank()) {
         	//エラー時のメッセージ内容
-            errors.put("f4", "このフィールドを入力してください");
+            errors.put("f4", "　　このフィールドを入力してください");
             
             
             // プルダウン用データをセット
