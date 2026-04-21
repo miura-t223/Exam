@@ -47,8 +47,8 @@
                         <option value="">----</option>
                         <c:forEach var="subject" items="${class_subject_set}">
                             <%-- 現在のnumと選択されていた値が一致していればselectedを追記 --%>
-                            <!-- <option value="${subject.code}" <c:if test="${subject.code == f3}">selected</c:if>></option> -->
-                            <option value="${subject.code}" <c:if test="${subject.code == f3}">selected</c:if>>${subject.name}</option>
+                            <!-- <option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>></option> -->
+                            <option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>>${subject.name}</option>
                             	
                             	
                         </c:forEach>

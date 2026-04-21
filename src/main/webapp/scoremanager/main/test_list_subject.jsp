@@ -29,7 +29,7 @@
 				<div class="col-3">
 				    <label class="form-label" for="student-f2-select">クラス</label>
 				    <select class="form-select" id="student-f2-select" name="f2">
-				        <option value="">----</option>
+				        <option value="0">----</option>
 				        <c:forEach var="num" items="${class_num_set}">
 				            <option value="${num}" <c:if test="${num==f2}">selected</c:if>>${num}</option>
 				        </c:forEach>
@@ -39,9 +39,9 @@
 				<div class="col-3">
 				    <label class="form-label" for="student-f3-select">科目</label>
 				    <select class="form-select" id="student-f3-select" name="f3">
-				        <option value="">----</option>
+				        <option value="0">----</option>
 				        <c:forEach var="subject" items="${class_subject_set}">
-				            <option value="${subject.code}" <c:if test="${subject.code == f3}">selected</c:if>>
+				            <option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>>
 				                ${subject.name}
 				            </option>
 				        </c:forEach>
@@ -78,7 +78,7 @@
 					        <td>${t.no}</td>
 					        <td>${t.point}</td>
 					        <!-- 成績変更 -->
-					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.code}&no=${t.no}">変更</a></td>
+					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
 		                </tr>
 		            </c:forEach>
 		        </table>

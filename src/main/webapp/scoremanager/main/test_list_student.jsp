@@ -51,7 +51,7 @@
 					        <td>${t.no}</td>
 					        <td>${t.point}</td>
 					        <!-- 成績変更 -->
-					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.code}&no=${t.no}">変更</a></td>
+					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
 		                </tr>
 		            </c:forEach>
 		        </table>

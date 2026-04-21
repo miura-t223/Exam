@@ -31,63 +31,67 @@ public class TestListSubjectExecuteAction extends Action {
         String subjectCd = request.getParameter("f3");
         
         
+        // DAO
+	    StudentDao sDao = new StudentDao();
+	    SubjectDao subDao = new SubjectDao();
+        Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+        TestDao tDao = new TestDao();
+        
+        
+        // 入学年度
+	    List<Integer> entYearSet = new ArrayList<>();
+	    int year = java.time.LocalDate.now().getYear();
+	    for (int i = year - 10; i <= year + 1; i++) {
+	        entYearSet.add(i);
+	    }
+	    // クラス
+        List<String> classList = sDao.getClassNumSet(teacher.getSchool().getCd());
+        // 科目
+        List<Subject> subjectList = subDao.filter(teacher.getSchool());
+        
+        
+        
         // 検索フィールドが未入力or空白の場合
         if (entYear == null || entYear.equals("0")
         	    || classNum == null || classNum.isBlank()
         	    || subjectCd == null || subjectCd.isBlank()) {
-
+        	
         	    errors.put("f1", "入学年度・クラス・科目をすべて選択してください");
-
-        	    Teacher teacher = (Teacher) request.getSession().getAttribute("user");
-
-        	    StudentDao sDao = new StudentDao();
-        	    SubjectDao subDao = new SubjectDao();
-
-        	    // 入学年度
-        	    List<Integer> entYearSet = new ArrayList<>();
-        	    int year = java.time.LocalDate.now().getYear();
-        	    for (int i = year - 10; i <= year + 1; i++) {
-        	        entYearSet.add(i);
-        	    }
-
-        	    // クラス
-        	    List<String> classList = sDao.getClassNumSet(teacher.getSchool().getCd());
-
-        	    // 科目
-        	    List<Subject> subjectList = subDao.filter(teacher.getSchool());
-
+        	    
+        	    
+        	    
         	    request.setAttribute("ent_year_set", entYearSet);
         	    request.setAttribute("class_num_set", classList);
         	    request.setAttribute("class_subject_set", subjectList);
-
         	    request.setAttribute("errors", errors);
         	    request.setAttribute("tests", new ArrayList<>());
         	    request.setAttribute("f1", entYear);
         	    request.setAttribute("f2", classNum);
         	    request.setAttribute("f3", subjectCd);
 
-        	    request.getRequestDispatcher("test_list_subject.jsp").forward(request, response);
+        	    request.getRequestDispatcher("test_list.jsp").forward(request, response);
         	    return;
         	}
-
+        
         
         
         
         // 検索処理
-        Teacher teacher = (Teacher) request.getSession().getAttribute("user");
-        TestDao tDao = new TestDao();
+       
         int entYearInt = Integer.parseInt(entYear);
         List<Test> tests = tDao.filter(teacher.getSchool(), entYearInt, classNum, subjectCd);
-
-        
+	    
         
         
         // JSPに値を渡す
+        request.setAttribute("ent_year_set", entYearSet);
+        request.setAttribute("class_num_set", classList);
+        request.setAttribute("class_subject_set", subjectList);
+        
         request.setAttribute("tests", tests);
         request.setAttribute("f1", entYear);
         request.setAttribute("f2", classNum);
         request.setAttribute("f3", subjectCd);
-        
         
         // フォワード先を設定
         request.getRequestDispatcher("test_list_subject.jsp").forward(request, response);
