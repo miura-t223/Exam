@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Subject implements Serializable {
 
     // 科目コード
-    private String code;
+    private String cd;
 
     // 科目名
     private String name;
@@ -14,12 +14,12 @@ public class Subject implements Serializable {
     private School school;
 
     // getter・setter
-    public String getCode() {
-        return code;
+    public String getCd() {
+        return cd;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCd(String cd) {
+        this.cd = cd;
     }
 
     public String getName() {
