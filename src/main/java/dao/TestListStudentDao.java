@@ -54,7 +54,7 @@ public class TestListStudentDao {
 
             // Subject（名前も入れるのがポイント）
             Subject subject = new Subject();
-            subject.setCode(rs.getString("subject_code"));
+            subject.setCd(rs.getString("subject_code"));
             subject.setName(rs.getString("subject_name"));
             test.setSubject(subject);
 

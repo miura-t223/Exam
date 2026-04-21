@@ -41,8 +41,7 @@ public class SubjectDao {
 
         if (rs.next()) {
             subject = new Subject();
-
-            subject.setCode(rs.getString("cd"));
+            subject.setCd(rs.getString("cd"));
             subject.setName(rs.getString("name"));
             subject.setSchool(school);
         }
@@ -61,11 +60,12 @@ public class SubjectDao {
         while (rs.next()) {
 
             Subject subject = new Subject();
-
-            subject.setCode(rs.getString("cd"));
+            
+            subject.setCd(rs.getString("cd"));
             subject.setName(rs.getString("name"));
             subject.setSchool(school);
-
+            
+            
             list.add(subject);
         }
 
@@ -103,7 +103,7 @@ public class SubjectDao {
         PreparedStatement st = con.prepareStatement(sql);
 
         st.setString(1, subject.getSchool().getCd());
-        st.setString(2, subject.getCode());
+        st.setString(2, subject.getCd());
         st.setString(3, subject.getName());
 
         int line = st.executeUpdate();
@@ -123,7 +123,7 @@ public class SubjectDao {
         PreparedStatement st = con.prepareStatement(sql);
 
         st.setString(1, subject.getName());
-        st.setString(2, subject.getCode());
+        st.setString(2, subject.getCd());
         st.setString(3, subject.getSchool().getCd());
 
         int line = st.executeUpdate();

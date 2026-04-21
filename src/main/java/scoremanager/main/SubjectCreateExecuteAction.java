@@ -87,7 +87,7 @@ public class SubjectCreateExecuteAction extends Action {
 		// 6. Subjectインスタンスに詰める
 		// --------------------------------------------------
 		Subject subject = new Subject();
-		subject.setCode(cd);
+		subject.setCd(cd);
 		subject.setName(name);
 		subject.setSchool(teacher.getSchool());
 

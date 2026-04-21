@@ -269,4 +269,36 @@ public class StudentDao extends Dao {
     		return false;
     	}
     }
+    
+    
+    
+    public List<String> getClassNumSet(String schoolCd) throws Exception {
+        List<String> list = new ArrayList<>();
+
+        Connection con = getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = con.prepareStatement(
+                "SELECT DISTINCT class_num FROM student WHERE school_cd=? ORDER BY class_num"
+            );
+            ps.setString(1, schoolCd);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(rs.getString("class_num"));
+            }
+
+        } finally {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        }
+
+        return list;
+    }
+
+    
+    
 }

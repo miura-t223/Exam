@@ -41,7 +41,7 @@ public class TestListSubjectDao {
 
         PreparedStatement st = con.prepareStatement(sql);
 
-        st.setString(1, subject.getCode());
+        st.setString(1, subject.getCd());
         st.setString(2, school.getCd());
         st.setString(3, classNum);
         st.setInt(4, entYear);
