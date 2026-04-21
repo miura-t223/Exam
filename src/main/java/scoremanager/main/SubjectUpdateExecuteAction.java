@@ -23,7 +23,7 @@ public class SubjectUpdateExecuteAction extends Action {
  
   
  
-        // ログインチェック(写経)
+        // ログインしているかチェック
  
         HttpSession session = request.getSession();
  
@@ -81,13 +81,13 @@ public class SubjectUpdateExecuteAction extends Action {
  
         subject.setSchool(teacher.getSchool());
         
-        
+        // DBに接続
         SubjectDao dao = new SubjectDao();
         dao.update(subject);  
  
   
  
-        // 完了画面へ
+        // 完了画面へフォワード
  
         request.getRequestDispatcher("subject_update_done.jsp")
  
