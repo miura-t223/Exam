@@ -47,7 +47,7 @@ public class TestDao extends Dao {
 
             subject.setSchool(school);
 
-            subject.setCode(rs.getString("subject_code"));
+            subject.setCd(rs.getString("subject_code"));
 
             test.setStudent(student);
 

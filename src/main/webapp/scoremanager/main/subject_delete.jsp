@@ -13,11 +13,11 @@
             本当に削除しますか？
         </div>
 
-        <p>科目コード：${subject.code}</p>
+        <p>科目コード：${subject.cd}</p>
         <p>科目名：${subject.name}</p>
 
         <form action="SubjectDeleteExecute.action" method="post">
-            <input type="hidden" name="cd" value="${subject.code}">
+            <input type="hidden" name="cd" value="${subject.cd}">
             <button type="submit" class="btn btn-danger">削除する</button>
             <a href="SubjectList.action" class="btn btn-secondary">キャンセル</a>
         </form>

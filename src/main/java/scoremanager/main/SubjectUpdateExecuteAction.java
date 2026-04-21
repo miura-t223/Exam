@@ -75,7 +75,7 @@ public class SubjectUpdateExecuteAction extends Action {
  
         Subject subject = new Subject();
  
-        subject.setCode(cd);
+        subject.setCd(cd);
  
         subject.setName(name);
  
