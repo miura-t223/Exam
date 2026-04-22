@@ -146,16 +146,16 @@
 		        <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div>
 		        <table class="table table-hover">
 		            <tr>
-		                <th>クラス</th>
-		                <th>科目</th>
-		                <th>テスト</th>
-		                <th>得点</th>
+		                <th>科目名</th>
+		                <th>科目コード</th>
+		                <th>回数</th>
+		                <th>点数</th>
 		                <th></th>
 		            </tr>
 		            <c:forEach var="t" items="${tests}">
 					    <tr>
-					        <td>${t.student.classNum}</td>
 					        <td>${t.subject.name}</td>
+					        <td>${t.subject.cd}</td>
 					        <td>${t.no}</td>
 					        <td>${t.point}</td>
 					        <!-- 成績変更 -->

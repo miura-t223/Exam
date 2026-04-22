@@ -144,18 +144,32 @@
 		        <div><label>科目：${tests[0].subject.name}</label></div>
 		        <table class="table table-hover">
 		            <tr>
+		                <th>入学年度</th>
 		                <th>クラス</th>
-		                <th>科目</th>
-		                <th>テスト</th>
-		                <th>得点</th>
+		                <th>学生番号</th>
+		                <th>氏名</th>
+		                <th>1回</th>
+		                <th>2回</th>
 		                <th></th>
 		            </tr>
 		            <c:forEach var="t" items="${tests}">
 					    <tr>
-					        <td>${t.student.classNum}</td>
-					        <td>${t.subject.name}</td>
-					        <td>${t.no}</td>
-					        <td>${t.point}</td>
+						    <td>${t.student.entYear}</td>
+						    <td>${t.student.classNum}</td>
+						    <td>${t.student.no}</td>
+						    <td>${t.student.name}</td>
+						    <!-- 1回の得点 -->
+						    <td>
+						        <c:if test="${t.no == 1}">
+						            ${t.point}
+						        </c:if>
+						    </td>
+						    <!-- 2回の得点 -->
+						    <td>
+						        <c:if test="${t.no == 2}">
+						            ${t.point}
+						        </c:if>
+						    </td>
 					        <!-- 成績変更 -->
 					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
 		                </tr>
