@@ -91,41 +91,38 @@
 	                <!-- 学生番号で検索(テキストボックス) -->
 	                <div class="col-4">
 		                <label class="form-label" for="student-no">学生番号</label>
-		                
-		                
-<c:choose>
-    <c:when test="${not empty errors.get('f4')}">
-        <!-- エラー時（赤枠） -->
-        <input class="form-control"
-               type="text"
-               id="student-no"
-               name="f4"
-               maxlength="10"
-               value="${f4}"
-               placeholder="学生番号を入力してください"
-               required
-               data-bs-toggle="tooltip"
-               data-bs-placement="right"
-               title="${errors.get('f4')}"
-               style="border-color:#dc3545;">
-    </c:when>
-
-    <c:otherwise>
-        <!-- 通常時 -->
-        <input class="form-control"
-               type="text"
-               id="student-no"
-               name="f4"
-               maxlength="10"
-               value="${f4}"
-               placeholder="学生番号を入力してください"
-               required
-               data-bs-toggle="tooltip"
-               data-bs-placement="right"
-               title="${errors.get('f4')}">
-    </c:otherwise>
-</c:choose>
-
+		                <!-- 未入力 -->
+						<c:choose>
+						    <c:when test="${not empty errors.get('f4')}">
+						        <!-- エラー時 -->
+						        <input class="form-control"
+						               type="text"
+						               id="student-no"
+						               name="f4"
+						               maxlength="10"
+						               value="${f4}"
+						               placeholder="学生番号を入力してください"
+						               required
+						               data-bs-toggle="tooltip"
+						               data-bs-placement="right"
+						               title="${errors.get('f4')}"
+						               style="border-color:#dc3545;">
+						    </c:when>
+						    <c:otherwise>
+						        <!-- 通常時 -->
+						        <input class="form-control"
+						               type="text"
+						               id="student-no"
+						               name="f4"
+						               maxlength="10"
+						               value="${f4}"
+						               placeholder="学生番号を入力してください"
+						               required
+						               data-bs-toggle="tooltip"
+						               data-bs-placement="right"
+						               title="${errors.get('f4')}">
+						    </c:otherwise>
+						</c:choose>
 	                </div>
 	                
 	                <!-- 検索ボタン -->
