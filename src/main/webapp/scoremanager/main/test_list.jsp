@@ -9,10 +9,10 @@
 <c:param name="scripts"></c:param>
 <c:param name="content">
     <section class="me-4">
-
-
-
         <h2 class="h2 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">成績参照</h2>
+        
+        
+        
         <!-- 枠線 -->
         <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 	        
@@ -99,8 +99,8 @@
 	                <div class="mt-2 text-warning">${errors.get("f4")}</div>
 	            </div>
 	        </form>
-	        
        </div>
+       <p style="color: #00aaff;"><label>科目情報を選択または学生情報を入力して検索ボタンをクリックしてください</label></p>
        
        
 	</section>

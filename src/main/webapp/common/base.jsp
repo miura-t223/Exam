@@ -42,7 +42,21 @@ ${param.scripts}
 		<footer class="py-2 my-4 bg-dark bg-opacity-10 border-top border-3 align-bottom">
 			<c:import url="/common/footer.jsp" />
 		</footer>
-
+		
+		
+		<!-- Bootstrap の機能（Tooltip）を使えるようにするエンジン的役割 -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+        <!-- Tooltip を初期化するスクリプト -->
+		<script>
+		document.addEventListener('DOMContentLoaded', function () {
+		  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+		  tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+		    new bootstrap.Tooltip(tooltipTriggerEl)
+		  })
+		})
+		</script>
 	</div>
 </body>
 </html>

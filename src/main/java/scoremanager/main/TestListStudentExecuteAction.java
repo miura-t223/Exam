@@ -71,6 +71,25 @@ public class TestListStudentExecuteAction extends Action {
         
         
         
+     // プルダウン用データをセット
+        dao.StudentDao sDao = new dao.StudentDao();
+        dao.SubjectDao subDao = new dao.SubjectDao();
+
+        List<Integer> entYearSet = new ArrayList<>();
+        int year = java.time.LocalDate.now().getYear();
+        for (int i = year - 10; i <= year + 1; i++) {
+            entYearSet.add(i);
+        }
+
+        List<String> classList = sDao.getClassNumSet(teacher.getSchool().getCd());
+        List<bean.Subject> subjectList = subDao.filter(teacher.getSchool());
+
+        request.setAttribute("ent_year_set", entYearSet);
+        request.setAttribute("class_num_set", classList);
+        request.setAttribute("class_subject_set", subjectList);
+
+        
+        
         // JSPに値を渡す
         request.setAttribute("tests", tests);
         request.setAttribute("f4", studentNo);

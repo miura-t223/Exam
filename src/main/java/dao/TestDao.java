@@ -129,11 +129,13 @@ public class TestDao extends Dao {
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 	    ResultSet rs = null;
-	
+	    
+	    
 	    String sql =
 	    	    "SELECT " +
 	    	    " t.no AS test_no, t.point, t.class_num, " +
 	    	    " s.no AS student_no, " +
+	    	    " s.name AS student_name, " +
 	    	    " sub.cd AS subject_cd, sub.name AS subject_name " +
 	    	    "FROM test t " +
 	    	    "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
@@ -159,6 +161,8 @@ public class TestDao extends Dao {
 	            student.setNo(rs.getString("student_no"));
 	            student.setClassNum(rs.getString("class_num"));
 	            student.setSchool(school);
+	            student.setName(rs.getString("student_name"));
+
 
 	            // subject
 	            Subject subject = new Subject();
