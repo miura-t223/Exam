@@ -30,11 +30,35 @@ public class TestListStudentExecuteAction extends Action {
         // 検索フィールドが未入力or空白の場合
         if (studentNo == null || studentNo.isBlank()) {
         	//エラー時のメッセージ内容
-            errors.put("f4", "このフィールドを入力してください");
+            errors.put("f4", "　　このフィールドを入力してください");
+            
+            
+            // プルダウン用データをセット
+            Teacher teacher = (Teacher) request.getSession().getAttribute("user");
+            
+            // 入学年度
+            List<Integer> entYearSet = new ArrayList<>();
+            int year = java.time.LocalDate.now().getYear();
+            for (int i = year - 10; i <= year + 1; i++) {
+                entYearSet.add(i);
+            }
+            
+            // クラス
+            dao.StudentDao sDao = new dao.StudentDao();
+            List<String> classList = sDao.getClassNumSet(teacher.getSchool().getCd());
+            
+            // 科目
+            dao.SubjectDao subDao = new dao.SubjectDao();
+            List<bean.Subject> subjectList = subDao.filter(teacher.getSchool());
+            
+            request.setAttribute("ent_year_set", entYearSet);
+            request.setAttribute("class_num_set", classList);
+            request.setAttribute("class_subject_set", subjectList);
+            
             request.setAttribute("errors", errors);
             request.setAttribute("f4", studentNo);
             request.setAttribute("tests", new ArrayList<>());
-            request.getRequestDispatcher("test_list_student.jsp").forward(request, response);
+            request.getRequestDispatcher("test_list.jsp").forward(request, response);
             return;
         }
         
