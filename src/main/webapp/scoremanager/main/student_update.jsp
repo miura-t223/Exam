@@ -63,6 +63,11 @@
 					<div class="mt-3">
 						<input class="btn btn-primary" type="submit" value="変更">
 					</div>
+					<%-- 学生管理一覧へ戻る --%>
+					<div class="mt-2">
+					    <a href="StudentList.action">戻る</a>
+					</div>
+					</form>
 
 				</div>
 			</form>

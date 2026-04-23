@@ -66,12 +66,12 @@
                     </div>
 
                     <%-- パスワード表示/非表示チェックボックス --%>
-                    <div class="form-check text-end mb-3">
+                    <div class="form-check d-flex justify-content-center">
                         <input type="checkbox"
                                class="form-check-input"
                                id="chk_d_ps"
                                onclick="togglePassword()">
-                        <label for="chk_d_ps" class="form-check-label">
+                        <label for="chk_d_ps" class="form-check-label mb-3">
                             パスワードを表示
                         </label>
                     </div>
