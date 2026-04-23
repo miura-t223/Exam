@@ -64,18 +64,19 @@ public class TestDao extends Dao {
         ResultSet rs = null;
 
         String sql =
-            "SELECT " +
-            " t.no AS test_no, t.point, t.class_num, " +
-            " s.no AS student_no, s.name AS student_name, " +
-            " sub.cd AS subject_cd, sub.name AS subject_name " +
-            "FROM test t " +
-            "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
-            "JOIN subject sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
-            "WHERE t.school_cd = ? " +
-            "AND s.ent_year = ? " +
-            "AND s.class_num = ? " +
-            "AND t.subject_cd = ? " +
-            "ORDER BY s.no, t.no";
+        	    "SELECT " +
+        	    " t.no AS test_no, t.point, t.class_num, " +
+        	    " s.no AS student_no, s.name AS student_name, s.ent_year AS student_ent_year, " +
+        	    " sub.cd AS subject_cd, sub.name AS subject_name " +
+        	    "FROM test t " +
+        	    "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
+        	    "JOIN subject sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
+        	    "WHERE t.school_cd = ? " +
+        	    "AND s.ent_year = ? " +
+        	    "AND s.class_num = ? " +
+        	    "AND t.subject_cd = ? " +
+        	    "ORDER BY s.no, t.no";
+
 
         try {
             statement = connection.prepareStatement(sql);
@@ -92,8 +93,11 @@ public class TestDao extends Dao {
                 // 学生
                 Student student = new Student();
                 student.setNo(rs.getString("student_no"));
+                student.setName(rs.getString("student_name"));
+                student.setEntYear(rs.getInt("student_ent_year"));
                 student.setClassNum(rs.getString("class_num"));
                 student.setSchool(school);
+
 
                 // 科目
                 Subject subject = new Subject();
@@ -129,11 +133,14 @@ public class TestDao extends Dao {
 	    Connection connection = getConnection();
 	    PreparedStatement statement = null;
 	    ResultSet rs = null;
-	
+	    
+	    
 	    String sql =
 	    	    "SELECT " +
 	    	    " t.no AS test_no, t.point, t.class_num, " +
 	    	    " s.no AS student_no, " +
+	    	    " s.name AS student_name, " +
+	    	    " s.ent_year AS student_ent_year, " +   // ← これを追加
 	    	    " sub.cd AS subject_cd, sub.name AS subject_name " +
 	    	    "FROM test t " +
 	    	    "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
@@ -154,18 +161,22 @@ public class TestDao extends Dao {
 	        while (rs.next()) {
 	            Test test = new Test();
 
-	            // student
+	            // 学生
 	            Student student = new Student();
 	            student.setNo(rs.getString("student_no"));
+	            student.setName(rs.getString("student_name"));
+	            student.setEntYear(rs.getInt("student_ent_year"));
 	            student.setClassNum(rs.getString("class_num"));
 	            student.setSchool(school);
 
-	            // subject
+
+	            // 科目
 	            Subject subject = new Subject();
 	            subject.setCd(rs.getString("subject_cd"));
 	            subject.setName(rs.getString("subject_name"));
 	            subject.setSchool(school);
-
+	            
+	            // 得点
 	            test.setStudent(student);
 	            test.setSubject(subject);
 	            test.setNo(rs.getInt("test_no"));
