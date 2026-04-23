@@ -53,7 +53,6 @@ public class TestDao extends Dao {
     
     
     
-    
     // フィルター（科目別成績一覧検索：年度/クラス/科目）
     public List<Test> filter(School school, int entYear, String classNum, String subjectCd) throws Exception {
 

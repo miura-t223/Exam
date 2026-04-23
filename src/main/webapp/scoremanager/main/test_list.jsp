@@ -135,9 +135,6 @@
        
        
 	</section>
-       <div class="my-2 px-4">
-    	<a href="menu.jsp">メニューに戻る</a>
-	</div>
 </c:param>
 </c:import>
 

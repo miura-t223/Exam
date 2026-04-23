@@ -63,15 +63,13 @@ public class TestListStudentExecuteAction extends Action {
         }
         
         
-        
         // 検索処理
         Teacher teacher = (Teacher) request.getSession().getAttribute("user");
         TestDao tDao = new TestDao();
         List<Test> tests = tDao.filter(teacher.getSchool(), studentNo);
         
         
-        
-     // プルダウン用データをセット
+        // プルダウン用データをセット
         dao.StudentDao sDao = new dao.StudentDao();
         dao.SubjectDao subDao = new dao.SubjectDao();
 
@@ -98,3 +96,6 @@ public class TestListStudentExecuteAction extends Action {
         request.getRequestDispatcher("test_list_student.jsp").forward(request, response);
     }
 }
+
+
+
