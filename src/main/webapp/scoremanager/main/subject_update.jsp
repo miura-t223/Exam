@@ -10,7 +10,7 @@
  
     <c:param name="content">
  
-            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">科目情報更新</h2>
+            <h2 class="h3 mb-3 fw-bold bg-secondary bg-opacity-10 py-2 px-4">科目情報更新</h2>
  
   
  
@@ -43,9 +43,10 @@
  
   
  
-            <button type="submit" class="btn btn-primary">更新</button>
- 
-            <a href="SubjectList.action" class="btn btn-secondary">キャンセル</a>
+            <button type="submit" class="btn btn-primary">変更</button>
+            <div class="mt-2">
+			    <a href="SubjectList.action">戻る</a>
+			</div>
  
         </form>
  
