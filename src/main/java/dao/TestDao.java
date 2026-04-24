@@ -74,6 +74,7 @@ public class TestDao extends Dao {
         	    "AND s.ent_year = ? " +
         	    "AND s.class_num = ? " +
         	    "AND t.subject_cd = ? " +
+        	    "AND t.is_deleted = FALSE " +
         	    "ORDER BY s.no, t.no";
 
 
@@ -145,6 +146,7 @@ public class TestDao extends Dao {
 	    	    "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
 	    	    "JOIN subject sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
 	    	    "WHERE t.school_cd = ? AND t.student_no = ? " +
+	    	    "AND t.is_deleted = FALSE " +
 	    	    "ORDER BY t.no";
 	    
 	    
@@ -193,5 +195,97 @@ public class TestDao extends Dao {
 	
 	    return list;
 	}
-}
 	
+	
+	public Test get(School school, String studentNo, String subjectCd, int no) throws Exception {
+	
+	    Test test = null;
+	
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    ResultSet rs = null;
+	
+	
+	    String sql =
+	            "SELECT " +
+	            " t.no AS test_no, t.point, t.class_num, " +
+	            " s.no AS student_no, s.name AS student_name, s.ent_year AS student_ent_year, " +
+	            " sub.cd AS subject_cd, sub.name AS subject_name " +
+	            "FROM test t " +
+	            "JOIN student s ON t.student_no = s.no AND t.school_cd = s.school_cd " +
+	            "JOIN subject sub ON t.subject_cd = sub.cd AND t.school_cd = sub.school_cd " +
+	            "WHERE t.school_cd = ? " +
+	            "AND t.student_no = ? " +
+	            "AND t.subject_cd = ? " +
+	            "AND t.no = ? " +
+	            "AND t.is_deleted = FALSE";
+	
+	
+	    try {
+	        statement = connection.prepareStatement(sql);
+	        statement.setString(1, school.getCd());
+	        statement.setString(2, studentNo);
+	        statement.setString(3, subjectCd);
+	        statement.setInt(4, no);
+	
+	        rs = statement.executeQuery();
+	
+	        if (rs.next()) {
+	            test = new Test();
+	
+	            Student student = new Student();
+	            student.setNo(rs.getString("student_no"));
+	            student.setName(rs.getString("student_name"));
+	            student.setEntYear(rs.getInt("student_ent_year"));
+	            student.setClassNum(rs.getString("class_num"));
+	            student.setSchool(school);
+	
+	            Subject subject = new Subject();
+	            subject.setCd(rs.getString("subject_cd"));
+	            subject.setName(rs.getString("subject_name"));
+	            subject.setSchool(school);
+	
+	            test.setStudent(student);
+	            test.setSubject(subject);
+	            test.setNo(rs.getInt("test_no"));
+	            test.setPoint(rs.getInt("point"));
+	        }
+	
+	
+	    } finally {
+	        if (rs != null) rs.close();
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+	
+	    return test;
+	}
+	
+	
+	public boolean delete(School school, String studentNo, String subjectCd, int no) throws Exception {
+	
+	    Connection connection = getConnection();
+	    PreparedStatement statement = null;
+	    int count = 0;
+	
+	    try {
+	        statement = connection.prepareStatement(
+	                "UPDATE test SET is_deleted = TRUE " +
+	                "WHERE school_cd = ? AND student_no = ? AND subject_cd = ? AND no = ?"
+	        );
+	        statement.setString(1, school.getCd());
+	        statement.setString(2, studentNo);
+	        statement.setString(3, subjectCd);
+	        statement.setInt(4, no);
+	
+	        count = statement.executeUpdate();
+	
+	
+	    } finally {
+	        if (statement != null) statement.close();
+	        if (connection != null) connection.close();
+	    }
+	
+	    return count > 0;
+	}
+}
