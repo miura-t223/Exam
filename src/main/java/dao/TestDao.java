@@ -3,9 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ClassNum;
 import bean.School;
 import bean.Student;
 import bean.Subject;
@@ -288,4 +290,107 @@ public class TestDao extends Dao {
 	
 	    return count > 0;
 	}
+	
+	
+	
+	
+
+	
+	//○○
+	public Test get(Student student, Subject subject,
+            School school, int no) throws Exception {
+Test test = null;
+Connection con = getConnection();
+PreparedStatement st = null;
+ResultSet rs = null;
+
+try {
+    st = con.prepareStatement("select * from test where student_no=? and subject_cd=? " +"and school_cd=? and no=?"
+    );
+    st.setString(1, student.getNo());
+    st.setString(2, subject.getCd());
+    st.setString(3, school.getCd());
+    st.setInt(4, no);
+
+    rs = st.executeQuery();
+
+    if (rs.next()) {
+        test = new Test();
+        test.setStudent(student);
+        test.setSubject(subject);
+        test.setSchool(school);
+        test.setNo(rs.getInt("no"));
+        test.setPoint(rs.getInt("point"));
+        ClassNum cn = new ClassNum();
+        cn.setClass_num(rs.getString("class_num"));
+        test.setClassNum(cn);
+
+    }
+} finally {
+    if (rs != null) try { rs.close(); } catch (SQLException e) {}
+    if (st != null) try { st.close(); } catch (SQLException e) {}
+    if (con != null) try { con.close(); } catch (SQLException e) {}
+}
+return test;
+}
+
+
+// saveメソッド
+public boolean save(Test test) throws Exception {
+    Connection con = getConnection();
+    PreparedStatement st = null;
+    int count = 0;
+ 
+    try {
+        // 既存データがあるか確認
+        Test old = get(test.getStudent(), test.getSubject(),
+                          test.getSchool(), test.getNo());
+ 
+        if (old == null) {
+            // 新規登録
+            st = con.prepareStatement(
+                "insert into test (student_no, subject_cd, school_cd, " +
+                "no, point, class_num) values (?, ?, ?, ?, ?, ?)"
+            );
+            st.setString(1, test.getStudent().getNo());
+            st.setString(2, test.getSubject().getCd());
+            st.setString(3, test.getSchool().getCd());
+            st.setInt(4, test.getNo());
+            st.setInt(5, test.getPoint());
+            st.setString(6, test.getClassNum().getClass_num());
+
+        } else {
+            // 更新(pointだけ変える)
+            st = con.prepareStatement(
+                "update test set point=? where student_no=? and " +
+                "subject_cd=? and school_cd=? and no=?"
+            );
+            st.setInt(1, test.getPoint());
+            st.setString(2, test.getStudent().getNo());
+            st.setString(3, test.getSubject().getCd());
+            st.setString(4, test.getSchool().getCd());
+            st.setInt(5, test.getNo());
+        }
+ 
+        count = st.executeUpdate();
+ 
+    } finally {
+        if (st != null) try { st.close(); } catch (SQLException e) {}
+        if (con != null) try { con.close(); } catch (SQLException e) {}
+    }
+    return count > 0;
+}
+ 
+/**
+ * 複数件まとめて保存する(for文で1件ずつsave)
+ */
+public boolean save(List<Test> list) throws Exception {
+    boolean allSuccess = true;
+    for (Test test : list) {
+        if (!save(test)) allSuccess = false;
+    }
+    return allSuccess;
+}
+
+
 }

@@ -18,7 +18,11 @@ public class Test implements Serializable {
 
     // クラス番号
     private ClassNum classNum;
-
+    
+    // 学校
+    private School school;
+    
+//-----------------------------------------------------
     // getter・setter
     public Student getStudent() {
         return student;
@@ -59,4 +63,13 @@ public class Test implements Serializable {
     public void setClassNum(ClassNum classNum) {
         this.classNum = classNum;
     }
+    
+    public School getSchool() {
+        return school;
+    }
+    
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
 }

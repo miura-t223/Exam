@@ -138,11 +138,11 @@
        
        
        
-       
+       <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div>
         <!-- クラス、科目、テスト、得点を表示 -->
 		<c:choose>
 		    <c:when test="${tests.size() > 0}">
-		        <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div>
+		      <!--    <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div> -->
 		        <table class="table table-hover">
 		            <tr>
 		                <th>科目名</th>
