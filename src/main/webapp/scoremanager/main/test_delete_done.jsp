@@ -8,7 +8,7 @@
         <section class="me-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績削除完了</h2>
 
-            <div class="mx-3">
+			<div class="alert alert-success text-center" role="alert">
                 <p>削除が完了しました。</p>
                 <a href="TestList.action">成績参照へ戻る</a>
             </div>

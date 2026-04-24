@@ -11,7 +11,7 @@
             <h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生情報登録</h2>
 
             <%-- 完了メッセージ（緑の帯） --%>
-            <div class="alert alert-success mx-3 text-center">
+			<div class="alert alert-success text-center" role="alert">
                 登録が完了しました
             </div>
 

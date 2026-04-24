@@ -12,7 +12,8 @@
  
         <h2>科目変更完了</h2>
  
-        <div class="alert alert-success">変更が完了しました</div>
+		<div class="alert alert-success text-center" role="alert">
+        変更が完了しました</div>
  
         <a href="SubjectList.action" class="btn btn-secondary">一覧へ戻る</a>
  

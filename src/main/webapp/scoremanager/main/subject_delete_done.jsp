@@ -7,7 +7,7 @@
 
         <h2>科目削除完了</h2>
 
-        <div class="alert alert-success">
+		<div class="alert alert-success text-center" role="alert">
             削除が完了しました。
         </div>
 
