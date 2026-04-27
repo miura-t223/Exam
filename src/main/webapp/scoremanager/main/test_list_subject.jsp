@@ -150,7 +150,6 @@
 		                <th>氏名</th>
 		                <th>1回</th>
 		                <th>2回</th>
-		                <th></th>
 		            </tr>
 		            <c:forEach var="t" items="${tests}">
 					    <tr>
@@ -159,19 +158,27 @@
 						    <td>${t.student.no}</td>
 						    <td>${t.student.name}</td>
 						    <!-- 1回の得点 -->
-						    <td>
-						        <c:if test="${t.no == 1}">
-						            ${t.point}
-						        </c:if>
-						    </td>
-						    <!-- 2回の得点 -->
-						    <td>
-						        <c:if test="${t.no == 2}">
-						            ${t.point}
-						        </c:if>
-						    </td>
-					        <!-- 成績変更 -->
-					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
+							<td>
+							    <c:choose>
+							        <c:when test="${t.no == 1}">
+							            ${t.point}
+							        </c:when>
+							        <c:otherwise>
+							            -
+							        </c:otherwise>
+							    </c:choose>
+							</td>
+							<!-- 2回の得点 -->
+							<td>
+							    <c:choose>
+							        <c:when test="${t.no == 2}">
+							            ${t.point}
+							        </c:when>
+							        <c:otherwise>
+							            -
+							        </c:otherwise>
+							    </c:choose>
+							</td
 		                </tr>
 		            </c:forEach>
 		        </table>
@@ -181,9 +188,6 @@
 		    </c:otherwise>
 		</c:choose>
 	</section>
-       <div class="my-2 px-4">
-    	<a href="menu.jsp">メニューに戻る</a>
-	</div>
 </c:param>
 </c:import>
 

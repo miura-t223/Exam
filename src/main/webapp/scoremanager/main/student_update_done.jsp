@@ -9,7 +9,7 @@
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">学生情報変更</h2>
 
-			<div class="alert alert-success mx-3 text-center">
+			<div class="alert alert-success text-center" role="alert">
 				変更が完了しました
 			</div>
 

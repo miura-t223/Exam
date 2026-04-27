@@ -138,19 +138,17 @@
        
        
        
-       
+       <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div>
         <!-- クラス、科目、テスト、得点を表示 -->
 		<c:choose>
 		    <c:when test="${tests.size() > 0}">
-		        <!--<div>検索結果 ${tests.size()} 件</div>-->
-		        <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div>
+		      <!--    <div>氏名：${tests[0].student.name}（${tests[0].student.no}）</div> -->
 		        <table class="table table-hover">
 		            <tr>
 		                <th>科目名</th>
 		                <th>科目コード</th>
 		                <th>回数</th>
 		                <th>点数</th>
-		                <th></th>
 		            </tr>
 		            <c:forEach var="t" items="${tests}">
 					    <tr>
@@ -158,8 +156,6 @@
 					        <td>${t.subject.cd}</td>
 					        <td>${t.no}</td>
 					        <td>${t.point}</td>
-					        <!-- 成績変更 -->
-					        <td><a href="TestUpdate.action?studentNo=${t.student.no}&subjectCd=${t.subject.cd}&no=${t.no}">変更</a></td>
 		                </tr>
 		            </c:forEach>
 		        </table>
@@ -169,9 +165,6 @@
 		    </c:otherwise>
 		</c:choose>
 	</section>
-       <div class="my-2 px-4">
-    	<a href="menu.jsp">メニューに戻る</a>
-	</div>
 </c:param>
 </c:import>
 

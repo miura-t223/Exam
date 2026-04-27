@@ -10,6 +10,8 @@ public class ClassNum implements Serializable {
 	/* 学校:School */
 	private School school;
 	
+	
+	
 	/* ゲッター・セッター */
 	
 	public School getSchool() {
