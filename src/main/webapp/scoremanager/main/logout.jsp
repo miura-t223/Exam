@@ -9,40 +9,35 @@
 </head>
 <body class="bg-light">
 
-    <div class="container" style="max-width: 500px; margin-top: 100px;">
+    <div class="container mt-4">
 
-        <%-- システムタイトル --%>
-        <div class="text-center mb-4">
-            <h1 class="h3 fw-bold">得点管理システム</h1>
+        <!-- タイトル -->
+        <h1 class="fw-bold p-3" style="background-color:#dfe7f1;">
+            得点管理システム
+        </h1>
+
+        <!-- 見出し -->
+        <div class="p-3 mt-4" style="background-color:#e5e5e5;">
+            <h2 class="h5 fw-bold mb-0">ログアウト</h2>
         </div>
 
-        <!-- ログアウト機能 -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-white text-center py-3">
-                <h2 class="h4 mb-0 fw-bold">ログアウト</h2>
-            </div>
-            <div class="card-body p-4 text-center">
-
-                <div class="alert alert-success">
-                	<%-- ログアウト完了メッセージ --%>
-                    <strong>ログアウトしました</strong><br>
-                </div>
-
-                <%-- ログイン画面に戻るリンク（直JSPではなく Login.action に戻す） --%>
-                <div class="d-grid mt-4">
-                    <a href="${pageContext.request.contextPath}/scoremanager/main/Login.action"
-                       class="btn btn-primary btn-lg">
-                        ログイン画面へ戻る
-                    </a>
-                </div>
-
-            </div>
+        <!-- メッセージ -->
+        <div class="alert mt-4 text-center" style="background-color:#cfe2d6;">
+            ログアウトしました
         </div>
 
-        <%-- フッター --%>
-        <div class="text-center text-muted mt-4 small">
+        <!-- リンク（ボタンやめる） -->
+        <div class="mt-3">
+            <a href="${pageContext.request.contextPath}/scoremanager/main/Login.action">
+                ログイン画面へ戻る
+            </a>
+        </div>
+
+        <!-- フッター -->
+        <div class="text-center text-muted mt-5">
             &copy; 2023 TIC 大原学園
         </div>
+
     </div>
 
 </body>
