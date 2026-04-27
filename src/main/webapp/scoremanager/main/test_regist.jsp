@@ -6,23 +6,15 @@
     <c:param name="content">
         <section class="container mt-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
-			
-			<%-- エラーメッセージまとめ表示 --%>
-            <c:if test="${not empty errors}">
-                <div class="alert alert-danger mx-3">
-                    <ul class="mb-0 ps-3">
-                        <c:forEach var="error" items="${errors}">
-                            <li>${error.value}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
             
-            <%-- ===== 絞り込みフォーム ===== --%>
+            
+            
+            
+            <!-- ===== 絞り込みフォーム ===== -->
             <form method="get" action="TestRegist.action">
                 <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
- 
-                    <%-- 入学年度プルダウン (name=f1) --%>
+                
+                    <!-- 入学年度プルダウン (name=f1) -->
                     <div class="col-2">
                         <label class="form-label">入学年度</label>
                         <select class="form-select" name="f1">
@@ -32,8 +24,8 @@
                             </c:forEach>
                         </select>
                     </div>
- 
-                    <%-- クラスプルダウン (name=f2) --%>
+                    
+                    <!-- クラスプルダウン (name=f2) -->
                     <div class="col-2">
                         <label class="form-label">クラス</label>
                         <select class="form-select" name="f2">
@@ -43,8 +35,8 @@
                             </c:forEach>
                         </select>
                     </div>
- 
-                    <%-- 科目プルダウン (name=f3) --%>
+                    
+                    <!-- 科目プルダウン (name=f3) -->
                     <div class="col-3">
                         <label class="form-label">科目</label>
                         <select class="form-select" name="f3">
@@ -54,41 +46,55 @@
                             </c:forEach>
                         </select>
                     </div>
- 
-                    <%-- 回数プルダウン (name=f4) --%>
+                    
+                    <!-- 回数プルダウン (name=f4) -->
                     <div class="col-2">
                         <label class="form-label">回数</label>
                         <select class="form-select" name="f4">
                             <option value="0">--------</option>
-                            <c:forEach var="n" begin="1" end="9">
+                            <c:forEach var="n" begin="1" end="2">
                                 <option value="${n}" <c:if test="${n == f4}">selected</c:if>>${n}</option>
                             </c:forEach>
                         </select>
                     </div>
  
-                    <%-- 検索ボタン --%>
+                    <!-- 検索ボタン -->
                     <div class="col-1 text-center align-self-end">
                         <button class="btn btn-secondary" type="submit">検索</button>
                     </div>
+                    
+                    
+                    <!-- エラーメッセージの設定(プルダウン未選択時) -->
+                    <c:if test="${not empty f1 and not empty errors.filter}">
+                    <div style="color: orange; margin-top: 4px;" class="small">${errors.filter}</div>
+                    </c:if>
                 </div>
             </form>
  
-            <%-- ===== 検索結果 ===== --%>
+            <!-- ===== 検索結果 ===== -->
+            <!-- 検索結果がなかった場合(該当学生なし)のエラー文を表示 -->
+			<c:if test="${empty students and not empty message}">
+			    <div style="margin: 10px 0 15px 4px;">
+			        ${message}
+			    </div>
+			</c:if>
+            
+            
+            
             <c:if test="${not empty students}">
- 
-                <%-- ★① 科目名と回数の表示 --%>
-                <p class="px-4 fw-bold">科目：${subject.name}（${f4}回）</p>
+                <!-- 科目名と回数の表示 -->
+                <p>科目：${subject.name}（${f4}回）</p>
  
                 <form method="post" action="TestRegistExecute.action">
  
-                    <%-- 絞込条件を hidden で引き継ぐ --%>
+                    <!-- 絞込条件を hidden で引き継ぐ -->
                     <input type="hidden" name="f1" value="${f1}">
                     <input type="hidden" name="f2" value="${f2}">
                     <input type="hidden" name="f3" value="${f3}">
                     <input type="hidden" name="f4" value="${f4}">
  
-                    <%-- ★②〜⑫ テーブル(設計書通りの5列) --%>
-                    <table class="table table-striped">
+                    <!-- テーブル -->
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>入学年度</th>
@@ -101,56 +107,70 @@
                         <tbody>
                             <c:forEach var="s" items="${students}">
                                 <tr>
-                                    <%-- ③ 入学年度 --%>
+                                    <!-- 入学年度 -->
                                     <td>${s.entYear}</td>
- 
-                                    <%-- ④ クラス --%>
+                                    
+                                    <!-- クラス -->
                                     <td>${s.classNum}</td>
  
-                                    <%-- ⑤ 学生番号(hidden で送信も兼ねる) --%>
+                                    <!-- 学生番号 -->
                                     <td>
                                         ${s.no}
                                         <input type="hidden" name="student_no" value="${s.no}">
                                     </td>
- 
-                                    <%-- ⑥ 氏名 --%>
+                                    
+                                    <!-- 氏名 -->
                                     <td>${s.name}</td>
- 
-									<%-- ⑦⑫ 点数(登録済みなら表示のみ、未登録なら入力可) --%>
-									<td>
-									    <c:choose>
-									        <c:when test="${not empty point_map[s.no]}">
-									            <%-- ★登録済み: 表示のみ(変更不可) --%>
-									            ${point_map[s.no]}
-									            <input type="hidden" name="point" value="${point_map[s.no]}">
-									        </c:when>
-									        <c:otherwise>
-									            <%-- ★未登録: 入力欄を表示 --%>
-									            <input type="number" class="form-control"
-									                   name="point" min="0" max="100"
-									                   style="width: 100px;">
-									        </c:otherwise>
-									    </c:choose>
+                                    
+									<!-- 点数 -->
+									<td style="width: 280px;">
+									    <!-- 登録済み・未登録どちらも入力欄を出す(登録と変更) -->
+									    <input type="number" class="form-control"
+									           name="point"
+									           value="${point_map[s.no]}"
+									           style="width: 100px;">
+									           
+									    <input type="hidden"
+									           name="old_point_${s.no}" 
+									           value="${point_map[s.no]}">
+									           
+									           
+									           
+									    <!-- エラー表示(点数範囲外) -->
+									    <span class="small"
+									          style="color:#FFA500; display:block; min-height:16px; margin-top:2px;">
+									        <c:if test="${not empty errors[s.no]}">
+									            ${errors[s.no]}
+									        </c:if>
+									    </span>
 									</td>
+									
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
- 
-                    <%-- ⑬ 登録ボタン --%>
+                     
+                     
+
+                     
+                     
+                    <!-- 登録ボタン -->
                     <div class="px-4 mt-3">
+                         <!-- エラー：登録・変更箇所なしでボタンを押した場合 -->
+						<c:if test="${not empty errors.global}">
+						    <div class="small" 
+						         style="color:#FFA500; margin-top:10px; margin-bottom:8px;">
+						        ${errors.global}
+						    </div>
+						</c:if>
                         <button type="submit" class="btn btn-secondary">登録して終了</button>
                     </div>
                 </form>
             </c:if>
- 
-            <%-- 該当なしメッセージ --%>
-            <c:if test="${not empty f1 and f1 != 0 and empty students}">
-                <div class="alert alert-warning mx-3">
-                    該当する学生が見つかりませんでした。
-                </div>
-            </c:if>
- 
+            
+            
+            
+            
         </section>
     </c:param>
 </c:import>
