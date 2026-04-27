@@ -5,22 +5,22 @@
     <c:param name="title">科目削除</c:param>
     <c:param name="content">
 
-        <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">
-            科目削除確認
-        </h2>
-
-        <div class="alert alert-danger">
-            本当に削除しますか？
-        </div>
-
-        <p>科目コード：${subject.cd}</p>
-        <p>科目名：${subject.name}</p>
+        <div class="p-2 fw-bold fs-4" style="background-color:#e5e5e5;">
+        	科目情報削除
+    	</div>
+		<br>
+		 <div class="mt-3">
+        	「${subject.name}（${subject.cd}）」を削除してもよろしいですか？
+    	</div>
 
         <form action="SubjectDeleteExecute.action" method="post">
             <input type="hidden" name="cd" value="${subject.cd}">
             <button type="submit" class="btn btn-danger">削除する</button>
-            <a href="SubjectList.action" class="btn btn-secondary">キャンセル</a>
         </form>
+        <br>
+        <div class="mt-3">
+	        <a href="SubjectList.action">戻る</a>
+	    </div>
 
     </c:param>
 </c:import>

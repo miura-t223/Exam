@@ -9,7 +9,7 @@
 </head>
 <body class="bg-light">
 
-    <div class="container mt-4">
+    <div class="container" style="max-width: 900px;">
 
         <!-- タイトル -->
         <h1 class="fw-bold p-3" style="background-color:#dfe7f1;">
@@ -17,22 +17,25 @@
         </h1>
 
         <!-- 見出し -->
-        <div class="p-3 mt-4" style="background-color:#e5e5e5;">
-            <h2 class="h5 fw-bold mb-0">ログアウト</h2>
-        </div>
+		<div
+		 class="p-2 fw-bold fs-4" style="background-color:#e5e5e5; width: 70%; margin: 0 auto;">
+	         ログアウト
+	    </div>
 
         <!-- メッセージ -->
-        <div class="alert mt-4 text-center" style="background-color:#cfe2d6;">
-            ログアウトしました
-        </div>
-
+        <div class="mt-3 text-center p-2"
+		     style="background-color:#8CC3A9; width:70%; margin: 0 auto;">
+		    ログアウトしました
+		</div>
+		
+		
+		<br>
+		<br>
         <!-- リンク（ボタンやめる） -->
-        <div class="mt-3">
-            <a href="${pageContext.request.contextPath}/scoremanager/main/Login.action">
-                ログイン画面へ戻る
-            </a>
-        </div>
-
+		<div class="mt-3" style="margin-left: 150px;">
+		    <a href="Login.action">ログイン</a>
+		</div>
+		
         <!-- フッター -->
         <div class="text-center text-muted mt-5">
             &copy; 2023 TIC 大原学園
