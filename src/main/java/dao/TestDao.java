@@ -31,7 +31,7 @@ public class TestDao extends Dao {
             // 科目
             Subject subject = new Subject();
             subject.setSchool(school);
-            subject.setCode(rs.getString("subject_code"));
+            subject.setCd(rs.getString("subject_code"));
             test.setStudent(student);
             test.setSubject(subject);
             // テスト回数
