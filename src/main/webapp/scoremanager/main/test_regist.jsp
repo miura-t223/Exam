@@ -9,12 +9,11 @@
             
             
             
-            
-            <!-- ===== 絞り込みフォーム ===== -->
+<%------------------------------------ プルダウン ------------------------------------%>
             <form method="get" action="TestRegist.action">
                 <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
                 
-                    <!-- 入学年度プルダウン (name=f1) -->
+                    <%-- 入学年度プルダウン (name=f1) --%>
                     <div class="col-2">
                         <label class="form-label">入学年度</label>
                         <select class="form-select" name="f1">
@@ -25,7 +24,7 @@
                         </select>
                     </div>
                     
-                    <!-- クラスプルダウン (name=f2) -->
+                    <%-- クラスプルダウン (name=f2) --%>
                     <div class="col-2">
                         <label class="form-label">クラス</label>
                         <select class="form-select" name="f2">
@@ -36,7 +35,7 @@
                         </select>
                     </div>
                     
-                    <!-- 科目プルダウン (name=f3) -->
+                    <%-- 科目プルダウン (name=f3) --%>
                     <div class="col-3">
                         <label class="form-label">科目</label>
                         <select class="form-select" name="f3">
@@ -47,7 +46,7 @@
                         </select>
                     </div>
                     
-                    <!-- 回数プルダウン (name=f4) -->
+                    <%-- 回数プルダウン (name=f4) --%>
                     <div class="col-2">
                         <label class="form-label">回数</label>
                         <select class="form-select" name="f4">
@@ -58,42 +57,51 @@
                         </select>
                     </div>
  
-                    <!-- 検索ボタン -->
-                    <div class="col-1 text-center align-self-end">
-                        <button class="btn btn-secondary" type="submit">検索</button>
-                    </div>
+                     <%-- 検索ボタン --%>
+                     <div class="col-2 text-center">
+                         <button class="btn btn-secondary" id="filter-button">検索</button>
+                     </div>
+
                     
                     
-                    <!-- エラーメッセージの設定(プルダウン未選択時) -->
+                    <%-- エラーメッセージの設定(プルダウン未選択時) --%>
                     <c:if test="${not empty f1 and not empty errors.filter}">
                     <div style="color: orange; margin-top: 4px;" class="small">${errors.filter}</div>
                     </c:if>
                 </div>
             </form>
- 
-            <!-- ===== 検索結果 ===== -->
-            <!-- 検索結果がなかった場合(該当学生なし)のエラー文を表示 -->
-			<c:if test="${empty students and not empty message}">
-			    <div style="margin: 10px 0 15px 4px;">
-			        ${message}
-			    </div>
-			</c:if>
+<%------------------------------------------------------------------------------------%>
+
+
+
+
+
+
+
+<%------------------------------------- 検索結果 -------------------------------------%>
+            <%-- 検索結果がなかった場合(該当学生なし)のエラー文を表示 --%>
+            <c:if test="${empty students and not empty message}">
+               <div style="margin: 10px 0 15px 4px;">
+                  ${message}
+               </div>
+             </c:if>
             
             
             
             <c:if test="${not empty students}">
-                <!-- 科目名と回数の表示 -->
+                <%-- 科目名と回数の表示 --%>
                 <p>科目：${subject.name}（${f4}回）</p>
+ 
  
                 <form method="post" action="TestRegistExecute.action">
  
-                    <!-- 絞込条件を hidden で引き継ぐ -->
+                    <%-- 絞込条件を hidden で引き継ぐ --%>
                     <input type="hidden" name="f1" value="${f1}">
                     <input type="hidden" name="f2" value="${f2}">
                     <input type="hidden" name="f3" value="${f3}">
                     <input type="hidden" name="f4" value="${f4}">
  
-                    <!-- テーブル -->
+                    <%-- テーブル --%>
                     <table class="table">
                         <thead>
                             <tr>
@@ -107,24 +115,24 @@
                         <tbody>
                             <c:forEach var="s" items="${students}">
                                 <tr>
-                                    <!-- 入学年度 -->
+                                    <%-- 入学年度 --%>
                                     <td>${s.entYear}</td>
                                     
-                                    <!-- クラス -->
+                                    <%-- クラス --%>
                                     <td>${s.classNum}</td>
  
-                                    <!-- 学生番号 -->
+                                    <%-- 学生番号 --%>
                                     <td>
                                         ${s.no}
                                         <input type="hidden" name="student_no" value="${s.no}">
                                     </td>
                                     
-                                    <!-- 氏名 -->
+                                    <%-- 氏名 --%>
                                     <td>${s.name}</td>
                                     
-									<!-- 点数 -->
+									<%-- 点数 --%>
 									<td style="width: 280px;">
-									    <!-- 登録済み・未登録どちらも入力欄を出す(登録と変更) -->
+									    <%-- 登録済み・未登録どちらも入力欄を出す(登録と変更) --%>
 									    <input type="number" class="form-control"
 									           name="point"
 									           value="${point_map[s.no]}"
@@ -136,7 +144,7 @@
 									           
 									           
 									           
-									    <!-- エラー表示(点数範囲外) -->
+									    <%-- エラー表示(点数範囲外) --%>
 									    <span class="small"
 									          style="color:#FFA500; display:block; min-height:16px; margin-top:2px;">
 									        <c:if test="${not empty errors[s.no]}">
@@ -149,14 +157,13 @@
                             </c:forEach>
                         </tbody>
                     </table>
+<%------------------------------------------------------------------------------------%>
                      
                      
-
                      
-                     
-                    <!-- 登録ボタン -->
+                    <%-- 登録ボタン --%>
                     <div class="px-4 mt-3">
-                         <!-- エラー：登録・変更箇所なしでボタンを押した場合 -->
+                         <%-- エラー：登録・変更箇所なしでボタンを押した場合 --%>
 						<c:if test="${not empty errors.global}">
 						    <div class="small" 
 						         style="color:#FFA500; margin-top:10px; margin-bottom:8px;">
