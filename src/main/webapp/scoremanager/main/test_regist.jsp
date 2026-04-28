@@ -36,7 +36,7 @@
                     </div>
                     
                     <%-- 科目プルダウン (name=f3) --%>
-                    <div class="col-3">
+                    <div class="col-4">
                         <label class="form-label">科目</label>
                         <select class="form-select" name="f3">
                             <option value="0">--------</option>
