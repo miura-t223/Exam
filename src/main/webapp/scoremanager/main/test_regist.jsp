@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
  
 <c:import url="/common/base.jsp">
-    <c:param name="title">成績管理</c:param>
+    <c:param name="title">得点管理システム</c:param>
     <c:param name="content">
         <section class="container mt-4">
             <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
@@ -90,7 +90,7 @@
             
             <c:if test="${not empty students}">
                 <%-- 科目名と回数の表示 --%>
-                <p>科目：${subject.name}（${f4}回）</p>
+                <div><label>科目：${subject.name}（${f4}回）</label></div>
  
  
                 <form method="post" action="TestRegistExecute.action">
