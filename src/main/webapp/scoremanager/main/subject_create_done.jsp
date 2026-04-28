@@ -11,13 +11,17 @@
 		<section class="me-4">
 			<h2 class="h3 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">科目情報登録</h2>
 
-			<div class="alert alert-success text-center" role="alert">
-			    登録が完了しました
+			<div class="mt-3 text-center p-2"
+			     style="background-color:#8CC3A9; width:100%; margin: 0 auto;">
+			    変更が完了しました
 			</div>
+			<br>
+			<br>
+			<br>
+			<br>
 
 			<div class="mx-3">
-				<a href="SubjectCreate.action">戻る</a>
-				<span class="mx-2">|</span>
+				<a href="SubjectCreate.action" style="margin-right: 90px;">戻る</a>
 				<a href="SubjectList.action">科目一覧</a>
 			</div>
 		</section>
