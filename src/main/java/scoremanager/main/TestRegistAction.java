@@ -12,7 +12,6 @@ import bean.Student;
 import bean.Subject;
 import bean.Teacher;
 import bean.Test;
-import dao.ClassNumDao;
 import dao.StudentDao;
 import dao.SubjectDao;
 import dao.TestDao;
@@ -25,7 +24,7 @@ import tool.Action;
 
 
 public class TestRegistAction extends Action {
-    @Override
+	@Override
     public void execute(HttpServletRequest request,
                         HttpServletResponse response) throws Exception {
         // ログインチェック
@@ -55,70 +54,82 @@ public class TestRegistAction extends Action {
         }
         
         
-        
-        ClassNumDao cDao = new ClassNumDao();
-        List<String> classNumSet = new ArrayList<>();
-        
-        try { classNumSet = cDao.filter(teacher.getSchool()); }
-        catch (Exception e) {}
-        
+        StudentDao sDao = new StudentDao();
+        List<String> classNumSet = sDao.getClassNumSet(teacher.getSchool().getCd());
         SubjectDao subDao = new SubjectDao();
-        
         List<Subject> subjects = subDao.filter(teacher.getSchool());
+        // エラーメッセージを入れるための箱
+        Map<String, String> errors = new HashMap<>();
         
         
         
         
-        // 4つが揃ったら学生一覧 + 既存点数を取得 =====
-        List<Student> students = new ArrayList<>();
-        
-        if (entYearStr != null && !entYearStr.equals("0")
-&& classNum != null && !classNum.equals("0")
-&& subjectCd != null && !subjectCd.equals("0")
-&& noStr != null && !noStr.equals("0")) {
-            int entYear = Integer.parseInt(entYearStr);
- 
-            int no = Integer.parseInt(noStr);
-            // 学生一覧を取得
- 
-            StudentDao sDao = new StudentDao();
- 
-            students = sDao.filter(teacher.getSchool(), entYear, classNum, true);
-            // ★追加: 科目オブジェクトを取得(科目名表示用)
- 
-            Subject subject = subDao.get(subjectCd, teacher.getSchool());
-            // ★追加: 各学生の既存点数を取得して Map に入れる
- 
-            TestDao tDao = new TestDao();
- 
-            Map<String, Integer> pointMap = new HashMap<>();
- 
-            for (Student s : students) {
- 
-                Test existing = tDao.get(s, subject, teacher.getSchool(), no);
- 
-                if (existing != null) {
- 
-                    pointMap.put(s.getNo(), existing.getPoint());
- 
-                }
- 
-            }
-            
-            request.setAttribute("students", students);
-            request.setAttribute("subject", subject);
-            request.setAttribute("point_map", pointMap);
-            request.setAttribute("f1", entYear);
+        // 入力チェック（入学年度/クラス/科目/回数プルダウンのいずれかが未選択の場合）
+        if (entYearStr == null || entYearStr.equals("0") ||
+            classNum == null || classNum.equals("0") ||
+            subjectCd == null || subjectCd.equals("0") ||
+            noStr == null || noStr.equals("0")) {
+        	
+            errors.put("filter", "入学年度とクラスと科目と回数を選択してください");
+
+            // エラーをJSPに渡す
+            request.setAttribute("errors", errors);
+
+            // プルダウン用データをセット
+            request.setAttribute("ent_year_set", entYearSet);
+            request.setAttribute("class_num_set", classNumSet);
+            request.setAttribute("subject_set", subjects);
+
+            // 入力値を戻す
+            request.setAttribute("f1", entYearStr);
             request.setAttribute("f2", classNum);
             request.setAttribute("f3", subjectCd);
-            request.setAttribute("f4", no);
+            request.setAttribute("f4", noStr);
+
+            // 検索結果は空
+            request.setAttribute("students", new ArrayList<>());
+            // JSPへフォワード
+            request.getRequestDispatcher("test_regist.jsp").forward(request, response);
+            return;
         }
+        int entYear = Integer.parseInt(entYearStr);
+        int no = Integer.parseInt(noStr);
+        
+        // 学生一覧取得
+        List<Student> students = sDao.filter(teacher.getSchool(), entYear, classNum, false);
+        // 検索結果がなかった場合(該当学生なし)の
+        if (students.isEmpty()) {
+            request.setAttribute("message", "学生情報が存在しませんでした");
+        }
+
+        
+        // 科目
+        Subject subject = subDao.get(subjectCd, teacher.getSchool());
+        
+        // 既存点数
+        TestDao tDao = new TestDao();
+        Map<String, Integer> pointMap = new HashMap<>();
+        
+        for (Student s : students) {
+        	Test existing = tDao.get(s, subject, teacher.getSchool(), no);
+        	if (existing != null) {
+        		pointMap.put(s.getNo(), existing.getPoint());
+        		}
+        	}
         
         
-        
+        // JSPに渡す
+        request.setAttribute("students", students);
+        request.setAttribute("subject", subject);
+        request.setAttribute("point_map", pointMap);
+        request.setAttribute("f1", entYear);
+        request.setAttribute("f2", classNum);
+        request.setAttribute("f3", subjectCd);
+        request.setAttribute("f4", no);
         request.setAttribute("ent_year_set", entYearSet);
         request.setAttribute("class_num_set", classNumSet);
         request.setAttribute("subject_set", subjects);
+        // JSPへフォワード
         request.getRequestDispatcher("test_regist.jsp").forward(request, response);
-    }
+	}
 }

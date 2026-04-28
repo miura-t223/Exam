@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import bean.Student;
 import bean.Teacher;
 import bean.Test;
 import dao.TestDao;
@@ -24,6 +25,8 @@ public class TestListStudentExecuteAction extends Action {
         
         // リクエストパラメータ取得(学生番号)
         String studentNo = request.getParameter("f4");
+        
+        
         
         
         
@@ -78,17 +81,21 @@ public class TestListStudentExecuteAction extends Action {
         for (int i = year - 10; i <= year + 1; i++) {
             entYearSet.add(i);
         }
-
+        
+        
         List<String> classList = sDao.getClassNumSet(teacher.getSchool().getCd());
         List<bean.Subject> subjectList = subDao.filter(teacher.getSchool());
-
-        request.setAttribute("ent_year_set", entYearSet);
-        request.setAttribute("class_num_set", classList);
-        request.setAttribute("class_subject_set", subjectList);
-
+        
+        
+        // 学生情報を取得
+        Student student = sDao.get(studentNo);
         
         
         // JSPに値を渡す
+        request.setAttribute("student", student);
+        request.setAttribute("ent_year_set", entYearSet);
+        request.setAttribute("class_num_set", classList);
+        request.setAttribute("class_subject_set", subjectList);
         request.setAttribute("tests", tests);
         request.setAttribute("f4", studentNo);
         

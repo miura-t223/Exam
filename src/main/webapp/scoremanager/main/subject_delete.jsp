@@ -15,7 +15,7 @@
 
         <form action="SubjectDeleteExecute.action" method="post">
             <input type="hidden" name="cd" value="${subject.cd}">
-            <button type="submit" class="btn btn-danger">削除する</button>
+            <button type="submit" class="btn btn-danger">削除</button>
         </form>
         <br>
         <div class="mt-3">

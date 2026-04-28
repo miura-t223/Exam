@@ -60,7 +60,7 @@ public class TestListAction extends Action {
 		
 		
 		
-		// ★ 初回アクセス判定（ここでは forward しない）
+		// 初回アクセス判定
 		boolean isFirstAccess =
 		    entYearStr == null &&
 		    classNum == null &&

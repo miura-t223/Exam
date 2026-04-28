@@ -11,7 +11,7 @@
             削除が完了しました。
         </div>
 
-        <a href="SubjectList.action" class="btn btn-secondary">一覧へ戻る</a>
+        <a href="SubjectList.action">科目一覧</a>
 
     </c:param>
 </c:import>
