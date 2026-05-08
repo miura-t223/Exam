@@ -13,7 +13,7 @@
 
 			<div class="mt-3 text-center p-2"
 			     style="background-color:#8CC3A9; width:100%; margin: 0 auto;">
-			    変更が完了しました
+			    登録が完了しました
 			</div>
 			<br>
 			<br>
