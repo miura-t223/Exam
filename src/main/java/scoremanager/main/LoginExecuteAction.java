@@ -36,7 +36,7 @@ public class LoginExecuteAction extends Action {
         } else {
             // ---認証失敗: エラーメッセージを添えて login.jsp に戻す ---
             Map<String, String> errors = new HashMap<>();
-            errors.put("login", "IDまたはパスワードが間違っています");
+            errors.put("login", "IDまたはパスワードが確認できませんでした");
 
             request.setAttribute("errors", errors);
             request.setAttribute("id", id); // 入力したIDをフォームに残す
