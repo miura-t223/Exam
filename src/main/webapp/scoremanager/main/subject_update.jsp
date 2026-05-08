@@ -23,6 +23,7 @@
 			 <div class="mb-3">
 			    <label for="cd" class="col-sm-3 col-form-label">科目コード</label><br>
 			    <div style="margin-left: 17px;">${subject.cd}</div>
+			    <input type="hidden" name="cd" value="${subject.cd}">
 			</div>
  
  
