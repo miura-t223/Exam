@@ -15,7 +15,7 @@
     	</div>
  
 		<div class="mt-3 text-center p-2"
-	         style="background-color:#cfe2d6;">
+	         style="background-color:#8cc3a9;">
 	        変更が完了しました
     	</div>
  		<br>

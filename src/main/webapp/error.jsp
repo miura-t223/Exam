@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isErrorPage="true" %>
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>エラー</title></head>
-<body>
-<h1>エラーが発生しました</h1>
-<pre style="color:red;">
-<%
-  Throwable t = (Throwable) request.getAttribute("javax.servlet.error.exception");
-  if (t != null) { t.printStackTrace(new java.io.PrintWriter(out)); }
-%>
-</pre>
-<div class="my-2 px-4">
-    	<a href="menu.jsp">メニューに戻る</a>
-	</div>
-</body></html>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+ 
+<c:set var="user" value="${sessionScope.user}" />
+<c:import url="/common/base.jsp">
+    <c:param name="title">エラーページ</c:param>
+<c:param name="scripts"></c:param>
+
+
+
+<%-- エラーページ --%>
+
+    <c:param name="content">
+        <div>エラーが発生しました</div>
+    </c:param>
+</c:import>

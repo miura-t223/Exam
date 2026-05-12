@@ -6,11 +6,14 @@
     <c:param name="content">
 
         <h2>科目削除完了</h2>
-
-		<div class="alert alert-success text-center" role="alert">
-            削除が完了しました。
-        </div>
-
+		<div class="mt-3 text-center p-2"
+		     style="background-color:#8cc3a9; width:100%; margin: 0 auto;">
+		    削除が完了しました
+		</div>
+		<br>
+ 		<br>
+ 		<br>
+ 		<br>
         <a href="SubjectList.action">科目一覧</a>
 
     </c:param>
