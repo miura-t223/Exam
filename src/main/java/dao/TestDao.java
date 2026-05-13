@@ -14,10 +14,7 @@ import bean.Subject;
 import bean.Test;
  
 public class TestDao extends Dao {
- 
-    // SQL:学校名で絞り込み
-    private String baseSql = "select * from test where school_cd=?";
-
+	
     private List<Test> postFilter(ResultSet rs, School school) throws Exception {
     	List<Test> list = new ArrayList<>();
         // SQLの結果を１行ずつ取り出す
@@ -284,54 +281,121 @@ public class TestDao extends Dao {
         }
         return test;
     }
+	
+	
+	
+	
+	
+	
+	// 成績登録用（削除後サイド得点入力する場合のフラグと得点状況を更新）
+	private Test getIncludingDeleted(Test test) throws Exception {
+	    Connection con = getConnection();
+	    PreparedStatement st = null;
+	    ResultSet rs = null;
+	    Test result = null;
+
+	    try {
+	        st = con.prepareStatement(
+	            "select * from test " +
+	            "where student_no=? " +
+	            "and subject_cd=? " +
+	            "and TRIM(school_cd)=TRIM(?) " +  
+	            "and no=?"
+	        );
+	        st.setString(1, test.getStudent().getNo());
+	        st.setString(2, test.getSubject().getCd());
+	        st.setString(3, test.getSchool().getCd());
+	        st.setInt(4, test.getNo());
+
+	        rs = st.executeQuery();
+
+	        if (rs.next()) {
+	            result = new Test();
+
+	            // student
+	            Student stu = new Student();
+	            stu.setNo(rs.getString("student_no"));
+	            stu.setSchool(test.getSchool());
+	            result.setStudent(stu);
+
+	            // subject
+	            Subject sub = new Subject();
+	            sub.setCd(rs.getString("subject_cd"));
+	            sub.setSchool(test.getSchool());
+	            result.setSubject(sub);
+
+	            // no, point
+	            result.setNo(rs.getInt("no"));
+	            result.setPoint(rs.getInt("point"));
+
+	            // class_num
+	            ClassNum cn = new ClassNum();
+	            cn.setClass_num(rs.getString("class_num"));
+	            cn.setSchool(test.getSchool());
+	            result.setClassNum(cn);
+
+	            result.setSchool(test.getSchool());
+	        }
+
+	    } finally {
+	        if (rs != null) rs.close();
+	        if (st != null) st.close();
+	        if (con != null) con.close();
+	    }
+
+	    return result;
+	}
 
 
-    // saveメソッド
-    public boolean save(Test test) throws Exception {
-        Connection con = getConnection();
-        PreparedStatement st = null;
-        int count = 0;
-     
-        try {
-            // 既存データがあるか確認
-            Test old = get(test.getStudent(), test.getSubject(),
-                              test.getSchool(), test.getNo());
-     
-            if (old == null) {
-                // 新規登録
-                st = con.prepareStatement(
-                    "insert into test (student_no, subject_cd, school_cd, " +
-                    "no, point, class_num, is_deleted) values (?, ?, ?, ?, ?, ?, false)"
-                );
-                st.setString(1, test.getStudent().getNo());
-                st.setString(2, test.getSubject().getCd());
-                st.setString(3, test.getSchool().getCd());
-                st.setInt(4, test.getNo());
-                st.setInt(5, test.getPoint());
-                st.setString(6, test.getClassNum().getClass_num());
+	// saveメソッド
+	public boolean save(Test test) throws Exception {
+	    Connection con = getConnection();
+	    PreparedStatement st = null;
+	    int count = 0;
 
-            } else {
-                // 更新(pointだけ変える)
-                st = con.prepareStatement(
-                    "update test set point=?, class_num=?, is_deleted=false where student_no=? and " +
-                    "subject_cd=? and school_cd=? and no=?"
-                );
-                st.setInt(1, test.getPoint());
-                st.setString(2, test.getClassNum().getClass_num());
-                st.setString(3, test.getStudent().getNo());
-                st.setString(4, test.getSubject().getCd());
-                st.setString(5, test.getSchool().getCd());
-                st.setInt(6, test.getNo());
-            }
-     
-            count = st.executeUpdate();
-     
-        } finally {
-            if (st != null) try { st.close(); } catch (SQLException e) {}
-            if (con != null) try { con.close(); } catch (SQLException e) {}
-        }
-        return count > 0;
-    }
+	    try {
+	        // 削除済みも含めて取得
+	        Test old = getIncludingDeleted(test);
+
+	        if (old == null) {
+	            // 新規登録
+	            st = con.prepareStatement(
+	                "insert into test (student_no, subject_cd, school_cd, " +
+	                "no, point, class_num, is_deleted) values (?, ?, ?, ?, ?, ?, false)"
+	            );
+	            st.setString(1, test.getStudent().getNo());
+	            st.setString(2, test.getSubject().getCd());
+	            st.setString(3, test.getSchool().getCd());
+	            st.setInt(4, test.getNo());
+	            st.setInt(5, test.getPoint());
+	            st.setString(6, test.getClassNum().getClass_num());
+
+	        } else {
+	            // 復活 or 更新
+	            st = con.prepareStatement(
+	                "update test set point=?, class_num=?, is_deleted=false " +
+	                "where student_no=? and subject_cd=? and school_cd=? and no=?"
+	            );
+	            st.setInt(1, test.getPoint());
+	            st.setString(2, test.getClassNum().getClass_num());
+	            st.setString(3, test.getStudent().getNo());
+	            st.setString(4, test.getSubject().getCd());
+	            st.setString(5, test.getSchool().getCd());
+	            st.setInt(6, test.getNo());
+	        }
+
+	        count = st.executeUpdate();
+
+	    } finally {
+	        if (st != null) try { st.close(); } catch (SQLException e) {}
+	        if (con != null) try { con.close(); } catch (SQLException e) {}
+	    }
+
+	    return count > 0;
+	}
+	
+	
+	
      
     /**
      * 複数件まとめて保存する(for文で1件ずつsave)

@@ -71,11 +71,6 @@ public class TestListAction extends Action {
 		
 		
 		//初期値の設定
-		int entYear = 0;//指定なし(int型は初期化必須/コンパイルエラーになる)
-		// 入学年度が未選択時(null / "" / "0")の時は"０"にそろえる
-		if (entYearStr != null && !entYearStr.isBlank() && !entYearStr.equals("0")) {
-			entYear = Integer.parseInt(entYearStr);
-		}
 		// クラスが未選択の時は "0" に揃える
 		if (classNum == null || classNum.isBlank()) {
 			classNum = "0";

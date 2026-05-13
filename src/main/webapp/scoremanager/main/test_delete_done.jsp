@@ -9,7 +9,7 @@
 			<h2 class="h3 mb-3 fw-bold bg-secondary bg-opacity-10 py-2 px-4">成績削除</h2>
 
 			<div class="mx-3">
-				<div class="alert alert-success text-center py-1" role="alert">
+					<div class="mt-3 text-center p-2" style="background-color:#8cc3a9;">
 					削除が完了しました
 				</div>
 
