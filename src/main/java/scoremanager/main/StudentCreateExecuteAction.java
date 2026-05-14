@@ -53,8 +53,13 @@ public class StudentCreateExecuteAction extends Action {
         // 学生番号
         if (no == null || no.isBlank()) {
             errors.put("no", "学生番号を入力してください");
+            
+        } else if (!no.matches("[0-9]+")) {
+        	errors.put("no", "学生番号は数字で入力してください");
+        	
         } else if (no.length() > 10) {
             errors.put("no", "学生番号は10文字以内で入力してください");
+            
         }
 
         // 氏名
