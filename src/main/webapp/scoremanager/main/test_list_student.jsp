@@ -1,10 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
+
+
+<%-- 成績参照表示ページ --%>
 <c:import url="/common/base.jsp">
-    <c:param name="title">得点管理システム</c:param>
-	
-	<%-- 成績参照表示ページ --%>
+    <c:param name="title">成績一覧（学生）</c:param>
     <c:param name="content">
         <section class="me-4">
             <h2 class="h3 mb-3 fw-bold bg-secondary bg-opacity-10 py-2 px-4">
@@ -135,13 +138,14 @@
 
 
 
-
-			<%-- 氏名：学生名(学生番号) --%>
 			<%-- student表に学生情報が存在する場合 --%>
+			<%-- 「氏名：学生名(学生番号)」を表示 --%>
 			<c:if test="${not empty student}">
 			    <div>氏名：${student.name}（${student.no}）</div>
 			</c:if>
+			
 			<%-- student表に登録されていない学生番号を検索した場合 --%>
+			<%-- 「学生番号(〇〇)の学生は登録されていません。…」と表示 --%>
 			<c:if test="${empty student}">
 			    <div style="color:red; margin-bottom: 1rem;">※学生番号(${f4})の学生は登録されていません。学生管理画面から登録してください。</div>
 			</c:if>
@@ -152,6 +156,11 @@
 			
 			<c:choose>
 				<c:when test="${not empty tests}">
+					<%-- 平均点を表示 --%>
+				    <p style="font-weight:bold; font-size:30px; text-align:center; color:orange;">
+				        全科目の平均点：<fmt:formatNumber value="${avg}" maxFractionDigits="1" />点
+				        <br>
+				    </p>
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -178,12 +187,14 @@
 					</table>
 				</c:when>
 				
+				
+				
 				<%-- 登録された成績情報がなかった場合 --%>
 				<c:otherwise>
 					<div>成績情報が存在しませんでした</div>
 				</c:otherwise>
 			</c:choose>
 		</section>
-
 	</c:param>
 </c:import>
+		

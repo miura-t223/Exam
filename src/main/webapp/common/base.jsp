@@ -2,6 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -31,11 +35,18 @@ ${param.scripts}
 					<nav class="col-3" style="height:40rem;">
 						<c:import url="/common/navigation.jsp" />
 					</nav>
-					<main class="col-9 border-start"> ${param.content} </main>
+					<main class="col-9 border-start">
+					    ${param.content}
+					</main>
 				</c:when>
+				
 				<%-- 未ログインの場合 --%>
 				<c:otherwise>
-					<main class="col-8"> ${param.content} </main>
+					<main class="col-9 border-start">
+					    ${param.content}
+					</main>
+
+
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -57,6 +68,12 @@ ${param.scripts}
 		  })
 		})
 		</script>
+		
+		
+		
+
+		
+		
 		
 	</div>
 </body>

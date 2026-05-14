@@ -86,6 +86,7 @@ public class TestRegistExecuteAction extends Action {
 
             ClassNum cn = new ClassNum();
             cn.setClass_num(classNum);
+            cn.setSchool(teacher.getSchool());
             test.setClassNum(cn);
             
             

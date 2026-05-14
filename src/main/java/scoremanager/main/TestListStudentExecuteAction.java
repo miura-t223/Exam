@@ -72,6 +72,29 @@ public class TestListStudentExecuteAction extends Action {
         List<Test> tests = tDao.filter(teacher.getSchool(), studentNo);
         
         
+        
+        
+        // 平均点の計算
+        int sum = 0; //合計点の入れ物（初期値0）
+        int count = tests.size(); //点数入力されたデータ件数
+        // データ件数分、合計点を加算
+        for (Test t : tests) {
+            sum += t.getPoint();
+        }
+        if (count > 0) {
+        	// 平均点を計算（小数第1位で四捨五入）
+            double avg = Math.round((double) sum / count * 10) / 10.0;
+            request.setAttribute("avg", avg);  // 平均点
+        } else {
+            request.setAttribute("avg", null); 
+        }
+        request.setAttribute("searched", true);
+        request.setAttribute("count", count);
+
+
+        
+        
+        
         // プルダウン用データをセット
         dao.StudentDao sDao = new dao.StudentDao();
         dao.SubjectDao subDao = new dao.SubjectDao();
