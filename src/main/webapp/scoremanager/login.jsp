@@ -11,17 +11,20 @@
 </head>
 <body class="bg-light">
 
-    <div class="container" style="max-width: 500px; margin-top: 100px;">
+    
 
         <%-- システムタイトル --%>
-        <div class="text-center mb-4">
-            <h1 class="h3 fw-bold">得点管理システム</h1>
-        </div>
+		<div class="text-center py-3 mb-4"
+		     style="background-color:#dfe8f5; width: 75%; margin:auto;">
+		    <h1 class="fw-bold mb-0 text-center">得点管理システム</h1>
+		</div>
 
         <%-- ログインフォーム --%>
+        <div class="container" style="max-width: 600px; margin-top: 0px;">
         <div class="card shadow-sm">
             <%-- 画面タイトル --%>
-            <div class="card-header bg-white text-center py-3">
+            <div class="card-header text-center py-3"
+     			style="background-color:#f0f0f0;">
                 <h2 class="h4 mb-0 fw-bold">ログイン</h2>
             </div>
 
@@ -77,8 +80,8 @@
                     </div>
 
                     <%-- ログインボタン --%>
-                    <div class="d-grid">
-                        <button type="submit" name="login" class="btn btn-primary btn-lg">
+                    <div class="text-center">
+                        <button type="submit" name="login" class="btn btn-primary px-5">
                             ログイン
                         </button>
                     </div>
