@@ -67,22 +67,6 @@ public class TestListSubjectExecuteAction extends Action {
         // 検索処理
         int entYearInt = Integer.parseInt(entYear);
         List<Test> tests = tDao.filter(teacher.getSchool(), entYearInt, classNum, subjectCd);
-
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         

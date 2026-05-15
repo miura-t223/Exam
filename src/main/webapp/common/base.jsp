@@ -36,7 +36,9 @@ ${param.scripts}
 						<c:import url="/common/navigation.jsp" />
 					</nav>
 					<main class="col-9 border-start">
-					    ${param.content}
+					    
+					    <c:out value="${param.content}" escapeXml="false" />
+					    
 					</main>
 				</c:when>
 				

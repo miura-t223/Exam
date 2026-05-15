@@ -4,9 +4,10 @@
 <c:import url="/common/base.jsp">
     <c:param name="title">得点管理システム</c:param>
     <c:param name="content">
-        <section class="container mt-4">
-            <h2 class="h3 mb-3 fw-normal bg-secondary bg-opacity-10 py-2 px-4">成績管理</h2>
-            
+        <section class="me-4">
+            <h2 class="h3 mb-3 fw-bold bg-secondary bg-opacity-10 py-2 px-4">
+                成績管理
+            </h2>
             
             
 <%------------------------------------ プルダウン ------------------------------------%>

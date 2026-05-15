@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 
 <c:import url="/common/base.jsp">
-    <c:param name="title">得点管理システム</c:param>
-    
-    <c:param name="scripts">
-        <script></script>
-    </c:param>
+<c:param name="title">得点管理システム</c:param>
+<c:param name="scripts"><script></script></c:param>
+<c:param name="avg1">${avg1}</c:param>
+<c:param name="avg2">${avg2}</c:param>
+
+
     
     <%-- 成績参照表示ページ --%>
     <c:param name="content">
         <section class="me-4">
-            <h2 class="h2 mb-3 fw-norma bg-secondary bg-opacity-10 py-2 px-4">
+            <h2 class="h3 mb-3 fw-bold bg-secondary bg-opacity-10 py-2 px-4">
                 成績一覧（科目）
             </h2>
-
-
-<%--------------------------------------- 枠線 ---------------------------------------%>
+<%------------------------------------ 検索用枠線 ------------------------------------%>
 	        <%-- プルダウン --%>
             <div class="row border mx-3 mb-3 py-2 align-items-center rounded" id="filter">
 
@@ -43,7 +45,7 @@
                         <div class="col-2">
                             <label class="form-label" for="student-f2-select">クラス</label>
                             <select class="form-select" id="student-f2-select" name="f2">
-                                <option value="">----</option>
+                                <option value="0">----</option>
                                 <c:forEach var="num" items="${class_num_set}">
                                     <%-- 現在のnumと選択されていた値が一致していればselectedを追記 --%>
                                     <option value="${num}" <c:if test="${num==f2}">selected</c:if>>
@@ -56,7 +58,7 @@
                         <div class="col-4">
                             <label class="form-label" for="student-f3-select">科目</label>
                             <select class="form-select" id="student-f3-select" name="f3">
-                                <option value="">----</option>
+                                <option value="0">----</option>
                                 <c:forEach var="subject" items="${class_subject_set}">
                                     <option value="${subject.cd}" <c:if test="${subject.cd == f3}">selected</c:if>>
                                         ${subject.name}
@@ -77,9 +79,7 @@
                     </div>
                 </form>
 
-
-
-<%--------------------------------------- 横線 ---------------------------------------%>
+<%------------------------------------ 検索用横線 ------------------------------------%>
                 <div style="border-bottom: 1px solid #ccc; width: 95%; margin: 10px auto;"></div>
 
                 <%-- 学生情報 --%>
@@ -140,12 +140,11 @@
                     </div>
                 </form>
             </div>
-<%--------------------------------------- 枠線 ---------------------------------------%>
-
-
-
-
-            <%-- クラス、科目、テスト、得点を表示 --%>
+            
+            
+            
+            
+<%-------------------------------------- 科目名 --------------------------------------%>
             <c:choose>
                 <c:when test="${tests.size() > 0}">
                     <%--検索結果があった場合は科目名を表示--%>
@@ -155,8 +154,91 @@
                     
                     
                     
+<%-------------------------------------- 平均点 --------------------------------------%>
+                    <c:set var="sum1" value="0" />
+                    <c:set var="sum2" value="0" />
+                    <c:set var="totalsum" value="0" />
+                    <c:set var="count1" value="0" />
+                    <c:set var="count2" value="0" />
+                    <c:set var="totalcount" value="0" />
+                    <c:set var="average1" value="0" />
+                    <c:set var="average2" value="0" />
+                    <c:set var="totalaverage" value="0" />
                     
+                    <%-- 合計点数と受験人数を計算 --%>
+                     <c:forEach var="t" items="${tests}">
+                        <c:choose>
+                            <c:when test="${t.no == 1}">
+                                <c:set var="sum1" value="${sum1 + t.point}" />
+                                <c:set var="count1" value="${count1 + 1}" />
+                            </c:when>
+                            <c:when test="${t.no == 2}">
+                                <c:set var="sum2" value="${sum2 + t.point}" />
+                                <c:set var="count2" value="${count2 + 1}" />
+                            </c:when>
+                        </c:choose>
+                        <c:set var="totalsum" value="${totalsum + t.point}" />
+                        <c:set var="totalcount" value="${totalcount + 1}" />
+                    </c:forEach>
                     
+                    <%-- 平均点を計算 --%>
+                    <c:if test="${count1 > 0}">
+                        <c:set var="average1" value="${sum1 div count1}" />
+                    </c:if>
+                    <c:if test="${count2 > 0}">
+                        <c:set var="average2" value="${sum2 div count2}" />
+                    </c:if>
+                    <c:if test="${totalcount > 0}">
+                        <c:set var="totalaverage" value="${totalsum div totalcount}" />
+                    </c:if>
+                    
+                    <%-- 表示 --%>
+                    <div class="row mt-4">
+                        <%-- 試験1回目 --%>
+                        <div class="col-5 text-center">
+                            <%-- 試験1回目の受験人数がいない場合 --%>
+                            <c:if test="${count1 == 0}">
+                                <h5 style="margin-bottom:10px;">【1回目の試験】</h5>
+                                <p style="font-size:20px; margin-bottom:10px;">受験人数：${count1}人</p>
+                                <p style="font-size:20px; margin-bottom:10px;">平均点：ー</p>
+                            </c:if>
+                            <%-- 試験1回目の受験人数がいる場合 --%>
+                            <c:if test="${count1 > 0}">
+                                <h5 style="margin-bottom:10px;">【1回目の試験】</h5>
+                                <p style="font-size:20px; margin-bottom:10px;">受験人数：${count1}人</p>
+                                <p style="font-size:20px; margin-bottom:10px;">平均点：<span style="color:orange;"><fmt:formatNumber value="${average1}" maxFractionDigits="1" />点</span></p>
+                            </c:if>
+                        </div>
+                        <%-- 縦線 --%>
+                        <div class="col-1 d-flex justify-content-center">
+                            <div style="border-left: 1px solid #ddd; height: 100%;"></div>
+                        </div>
+                        <%-- 試験2回目 --%>
+                        <div class="col-5 text-center">
+                            <%-- 試験2回目の受験人数がいない場合 --%>
+                            <c:if test="${count2 == 0}">
+                                <h5 style="margin-bottom:10px;">【2回目の試験】</h5>
+                                <p style="font-size:20px; margin-bottom:10px;">受験人数：${count2}人</p>
+                                <p style="font-size:20px; margin-bottom:10px;">平均点：ー</p>
+                            </c:if>
+                            <%-- 試験2回目の受験人数がいる場合 --%>
+                            <c:if test="${count2 > 0}">
+                                <h5 style="margin-bottom:10px;">【2回目の試験】</h5>
+                                <p style="font-size:20px; margin-bottom:10px;">受験人数：${count2}人</p>
+                                <p style="font-size:20px; margin-bottom:10px;">平均点：<span style="color:orange;"><fmt:formatNumber value="${average2}" maxFractionDigits="1" />点</span></p>
+                            </c:if>
+                            </div>
+                        </div><p></p>
+                        <%-- 2科目分の平均点を表示 --%>
+                        <p style="font-weight:bold; font-size:30px; text-align:center; color:orange;">
+                            科目平均：<fmt:formatNumber value="${totalaverage}" maxFractionDigits="1" />点<br>
+                        </p>
+                        
+                        
+                        
+                        
+                        
+<%------------------------------------- テーブル -------------------------------------%>
                     <%-- 検索結果 --%>
                     <table class="table table-hover">
                         <tr>
